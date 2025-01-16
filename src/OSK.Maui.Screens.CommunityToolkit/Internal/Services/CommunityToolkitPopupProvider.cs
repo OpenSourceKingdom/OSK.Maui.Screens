@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Maui.Views;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace OSK.Maui.Screens.CommunityToolkit.Internal.Services
 {
@@ -7,13 +6,13 @@ namespace OSK.Maui.Screens.CommunityToolkit.Internal.Services
     {
         #region PopupHandlerProvider
 
-        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(Page? parentPage, Type popupType, CancellationToken cancellationToken)
+        protected override PopupHandler GetPopupHandler(Page? parentPage, Type popupType)
         {
             var popup = (Popup)ServiceProvider.GetRequiredService(popupType);
             parentPage ??= Shell.Current.Window.Page ?? Application.Current?.MainPage
                 ?? throw new InvalidOperationException("Unable to show CommunityToolkit Popup without a valid parent page.");
 
-            return new ValueTask<PopupHandler>(new CommunityToolkitPopupHandler(popup, parentPage));
+            return new CommunityToolkitPopupHandler(popup, parentPage);
         }
 
         #endregion

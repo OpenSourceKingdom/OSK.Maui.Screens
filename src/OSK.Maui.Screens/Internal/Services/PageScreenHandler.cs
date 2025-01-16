@@ -1,23 +1,21 @@
-﻿using OSK.Maui.Screens.Ports;
-
-namespace OSK.Maui.Screens.Internal.Services
+﻿namespace OSK.Maui.Screens.Internal.Services
 {
     internal class PageScreenHandler(IServiceProvider serviceProvider) : ScreenHandler<Page>(serviceProvider)
     {
         #region ScreenHandler Overrides
 
-        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(Page? parentPage, Type popupType, CancellationToken cancellationToken)
+        protected override PopupHandler GetPopupHandler(Page? parentPage, Type popupType)
         {
             var popup = (Page)ServiceProvider.GetRequiredService(popupType);
 
             if (parentPage is not null)
             {
-                return new ValueTask<PopupHandler>(new PagePopupHandler(parentPage.Navigation, popup));
+                return new PagePopupHandler(parentPage.Navigation, popup);
             }
 
             if (Shell.Current is not null)
             {
-                return new ValueTask<PopupHandler>(new PagePopupHandler(Shell.Current.Navigation, popup));
+                return new PagePopupHandler(Shell.Current.Navigation, popup);
             }
 
             if (Application.Current?.MainPage is null)
@@ -25,7 +23,7 @@ namespace OSK.Maui.Screens.Internal.Services
                 throw new InvalidNavigationException("Unable to create a popup without a current application set.");
             }
 
-            return new ValueTask<PopupHandler>(new PagePopupHandler(Application.Current.MainPage.Navigation, popup));
+            return new PagePopupHandler(Application.Current.MainPage.Navigation, popup);
         }
 
         protected override async Task<Page> NavigateToScreenAsync(string route, Type screenType, CancellationToken cancellationToken)

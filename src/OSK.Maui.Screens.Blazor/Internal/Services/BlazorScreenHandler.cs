@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 using OSK.Maui.Screens.Blazor.Ports;
-using OSK.Maui.Screens.Ports;
 
 namespace OSK.Maui.Screens.Blazor.Internal.Services
 {
@@ -10,7 +9,7 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
     {
         #region ScreenHandler Overrides
 
-        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(Page? parentPage, Type popupType, CancellationToken cancellationToken)
+        protected override PopupHandler GetPopupHandler(Page? parentPage, Type popupType)
         {
             if (Application.Current?.MainPage is null)
             {
@@ -20,13 +19,13 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
             var popupPage = ServiceProvider.GetRequiredService<BlazorPopupPage>();
             popupPage.SetPopupType(popupType);
 
-            return new ValueTask<PopupHandler>(new BlazorPopupHandler(componentProvider, ServiceProvider.GetRequiredService<INavigation>()));
+            return new BlazorPopupHandler(componentProvider, ServiceProvider.GetRequiredService<INavigation>());
         }
 
         protected override async Task<ComponentBase> NavigateToScreenAsync(string route, Type screenType, CancellationToken cancellationToken)
         {
             if (Application.Current?.MainPage is not ContentPage contentPage
-                || contentPage?.Content is not BlazorWebView blazorWebView)
+                || contentPage?.Content is not BlazorWebView)
             {
                 throw new NavigationException("Unable to navigate to blazor component when main page is not set to a content page with a blazor web view.");
             }
@@ -38,6 +37,5 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
         }
 
         #endregion
-
     }
 }

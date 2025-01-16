@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Moq;
+using OSK.Maui.Screens.Internal;
 using OSK.Maui.Screens.Internal.Services;
+using OSK.Maui.Screens.Models;
+using OSK.Maui.Screens.Ports;
+using Xunit;
 
 namespace OSK.Maui.Screens.UnitTests.Internal.Services
 {
@@ -11,7 +11,115 @@ namespace OSK.Maui.Screens.UnitTests.Internal.Services
     {
         #region Variables
 
+        private readonly List<ScreenRouteDescriptor> _routeDescriptors;
+        private readonly List<PopupDescriptor> _popupDescriptors;
+        private readonly Mock<IServiceProvider> _mockServiceProvider;
+
         private readonly ScreenService _screenService;
+
+        #endregion
+
+        #region Constructors
+
+        public ScreenServiceTests()
+        {
+            _routeDescriptors = [];
+            _popupDescriptors = [];
+            _mockServiceProvider = new Mock<IServiceProvider>();
+
+            _screenService = new ScreenService(_routeDescriptors, _popupDescriptors, _mockServiceProvider.Object);
+        }
+
+        #endregion
+
+        #region NavigateToScreenAsync
+
+        [Fact]
+        public async Task NavigateToScreenAsync_NullNavigation_ThrowsArgumentNullException()
+        {
+            // Arrange/Act/Assert
+            await Assert.ThrowsAsync<ArgumentNullException>(() => _screenService.NavigateToScreenAsync(null!));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("  ")]
+        public async Task NavigateToScreenAsync_InvalidRoute_ThrowsArgumentException(string? route)
+        {
+            // Arrange
+            var exceptionType = route == null ? typeof(ArgumentNullException) : typeof(ArgumentException);
+
+            // Act/Assert
+            await Assert.ThrowsAsync(exceptionType, () => _screenService.NavigateToScreenAsync(new ScreenNavigation(route!)));
+        }
+
+        [Fact]
+        public async Task NavigateToScreenAsync_NavigationWithNoMatchingRoute_ThrowsInvalidNavigationException()
+        {
+            // Arrange/Act/Assert
+            await Assert.ThrowsAsync<InvalidNavigationException>(() => _screenService.NavigateToScreenAsync(new ScreenNavigation("valid")));
+        }
+
+        [Theory]
+        [InlineData("abc/def")]
+        [InlineData("aBc/dEf")]
+        public async Task NavigateToScreenAsync_ValidNavigationWithMatchingRoute_VariousSpelling_ReturnsSuccessfully(string route)
+        {
+            // Arrange
+            _routeDescriptors.Add(new ScreenRouteDescriptor(route.ToLower(), typeof(IServiceCollection), typeof(IServiceCollection)));
+
+            var mockScreen = new object();
+
+            var mockNavigationHandler = new Mock<IScreenNavigationHandler>();
+            mockNavigationHandler.Setup(m => m.NavigateToAsync(It.IsAny<string>(), It.IsAny<Type>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(mockScreen);
+
+            _mockServiceProvider.Setup(m => m.GetService(It.IsAny<Type>()))
+                .Returns(mockNavigationHandler.Object);
+
+            // Act
+            var screen = await _screenService.NavigateToScreenAsync(new ScreenNavigation(route));
+        
+            // Assert
+            Assert.Equal(mockScreen, screen);
+        }
+
+        #endregion
+
+        #region ShowPopupAsync
+
+        [Fact]
+        public async Task ShowPopupAsync_PopupWithNoMatchingDescriptor_ThrowsInvalidNavigationException()
+        {
+            // Arrange/Act/Assert
+            await Assert.ThrowsAsync<InvalidNavigationException>(() => _screenService.ShowPopupAsync<IScreenPopup>(new PopupNavigation(null)));
+        }
+
+        [Fact]
+        public async Task ShowPopupAsync_PopupWithMatchingDescriptor_()
+        {
+            // Arrange
+            _popupDescriptors.Add(new PopupDescriptor(typeof(IScreenPopup), typeof(IScreenPopup)));
+
+            var mockPopupHandler = new Mock<PopupHandler>();
+            mockPopupHandler.Setup(m => m.WaitForCloseAsync())
+                .ReturnsAsync(1);
+
+            var mockPopupProvider = new Mock<IPopupHandlerProvider>();
+            mockPopupProvider.Setup(m => m.GetPopupHandler(It.IsAny<Type>(), It.IsAny<Page>()))
+                .Returns(mockPopupHandler.Object);
+
+            _mockServiceProvider.Setup(m => m.GetService(It.IsAny<Type>()))
+                .Returns(mockPopupProvider.Object);
+
+
+            // Act
+            var result = await _screenService.ShowPopupAsync<IScreenPopup>(new PopupNavigation(null));
+
+            // Assert
+            Assert.Equal(1, result);
+        }
 
         #endregion
     }

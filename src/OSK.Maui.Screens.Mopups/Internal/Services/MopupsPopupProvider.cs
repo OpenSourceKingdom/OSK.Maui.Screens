@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Mopups.Pages;
+﻿using Mopups.Pages;
 using Mopups.Services;
 
 namespace OSK.Maui.Screens.Mopups.Internal.Services
@@ -8,10 +7,10 @@ namespace OSK.Maui.Screens.Mopups.Internal.Services
     {
         #region PopupHandlerProvider
 
-        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(Page? parentPage, Type popupType, CancellationToken cancellationToken)
+        protected override PopupHandler GetPopupHandler(Page? parentPage, Type popupType)
         {
             var popup = (PopupPage)ServiceProvider.GetRequiredService(popupType);
-            return new ValueTask<PopupHandler>(new MopupsPopupHandler(MopupService.Instance, popup));
+            return new MopupsPopupHandler(MopupService.Instance, popup);
         }
 
         #endregion
