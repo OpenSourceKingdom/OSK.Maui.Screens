@@ -1,0 +1,33 @@
+name: .NET Test Automation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '8.0.x' ]
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+    - name: Restore dependencies
+      run: >-
+        dotnet restore ./src/${{ github.event.repository.name }}.sln
+    - name: Build
+      run: dotnet build --no-restore ./src/${{ github.event.repository.name }}.sln
+    - name: Test
+      run: dotnet test --no-build --verbosity normal ./src/${{ github.event.repository.name }}.sln

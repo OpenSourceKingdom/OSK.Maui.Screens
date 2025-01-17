@@ -1,0 +1,29 @@
+name: Publish packages
+
+on:
+  workflow_dispatch:
+  release:
+    types: [created]
+
+permissions:
+  packages: write
+  contents: read
+    
+jobs:
+  publish-nuget:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get the version
+        id: get_version
+        run: echo "PACKAGE_VERSION=${GITHUB_REF/refs\/tags\//}" >> "$GITHUB_OUTPUT" 
+      - uses: actions/setup-dotnet@v4.0.0
+        with:
+          dotnet-version: '8.0.x' # SDK Version to use.
+        env:
+          NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
+      - run: dotnet build --configuration Release ./src /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+      - name: Create the package
+        run: dotnet pack --configuration Release ./src -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+      - name: Publish the package to Nuget
+        run: dotnet nuget push ./*.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json

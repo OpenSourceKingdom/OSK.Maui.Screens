@@ -6,6 +6,12 @@ namespace OSK.Maui.Screens.Blazor
 {
     public static class MauiAppBuilderExtensions
     {
+        public static MauiAppBuilder AddBlazorScreens(this MauiAppBuilder builder)
+        {
+            builder.Services.AddBlazorScreens();
+            return builder;
+        }
+
         public static MauiAppBuilder AddBlazorScreen(this MauiAppBuilder builder, string route, Type blazorScreenType)
         {
             if (!blazorScreenType.IsAssignableTo(typeof(BlazorComponent)))

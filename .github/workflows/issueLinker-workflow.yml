@@ -1,0 +1,23 @@
+name: Attach Issue Link
+
+on:
+  pull_request:
+    branches: [ main ]
+    
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: the-wright-jamie/update-pr-info-action@v1
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        head-branch-regex: '\d+'
+        body-template: |
+          Fixes #%headbranch%
+        body-update-action: 'suffix'
+        body-uppercase-head-match: false
+        lowercase-branch: false
