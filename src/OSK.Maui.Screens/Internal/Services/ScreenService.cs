@@ -25,9 +25,10 @@ namespace OSK.Maui.Screens.Internal.Services
             ArgumentNullException.ThrowIfNull(navigation);
 
             var popupDescriptor = GetPopupDescriptorOrThrowAsync(typeof(TPopup));
+
             var popupHandlerProvider = (IPopupHandlerProvider)serviceProvider.GetRequiredService(popupDescriptor.HandlerProviderType);
             var popupHandler = await popupHandlerProvider.GetPopupHandlerAsync(popupDescriptor.PopupType, navigation.ParentPage);
-            
+
             return popupHandler;
         }
 

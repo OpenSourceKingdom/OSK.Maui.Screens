@@ -8,7 +8,9 @@ namespace OSK.Maui.Screens.Blazor
     {
         public static IServiceCollection AddBlazorScreens(this IServiceCollection services)
         {
-            services.TryAddScoped<IBlazorComponentProvider, BlazorComponentProvider>();
+            services.TryAddSingleton<IBlazorComponentProvider, BlazorComponentProvider>();
+            services.TryAddTransient<BlazorScreenHandler>();
+            services.TryAddTransient<BlazorPopupComponentPage>();
 
             return services;
         }

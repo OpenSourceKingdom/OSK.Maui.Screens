@@ -16,9 +16,9 @@ namespace OSK.Maui.Screens
             CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(popupType);
-            if (!popupType.IsAssignableTo(typeof(Page)))
+            if (!popupType.IsAssignableTo(typeof(TScreen)))
             {
-                throw new InvalidNavigationException($"Popup Provider of type {GetType().FullName} only create popups of type {typeof(Page).FullName}.");
+                throw new InvalidNavigationException($"Popup Provider of type {GetType().FullName} can only create popups of type {typeof(TScreen).FullName}.");
             }
 
             return GetPopupHandlerAsync(parentPage, popupType, cancellationToken);

@@ -9,6 +9,10 @@ public partial class BlazorPopupComponentPage : ContentPage
     public BlazorPopupComponentPage()
     {
         InitializeComponent();
+
+        WidthRequest = Application.Current!.MainPage!.Width / 2;
+        HeightRequest = Application.Current.MainPage.Height / 2;
+        TranslationX += Application.Current.MainPage.Width * .1;
     }
 
     #endregion

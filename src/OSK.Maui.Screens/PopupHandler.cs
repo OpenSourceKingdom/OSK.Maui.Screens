@@ -2,12 +2,26 @@
 
 namespace OSK.Maui.Screens
 {
-    public abstract class PopupHandler(IScreenPopup popup) : IPopupHandler, IPopupWaiter
+    public abstract class PopupHandler : IPopupHandler, IPopupWaiter
     {
-        public IScreenPopup Popup => popup;
+        #region Constructors
+
+        public PopupHandler(IScreenPopup popup)
+        {
+            Popup = popup;
+
+            Popup.PopupHandler = this;
+        }
+
+        #endregion
+
+        #region IPopupHandler, IPopupWaiter
+        public IScreenPopup Popup { get; private set; }
 
         public abstract Task<object?> WaitForCloseAsync();
 
         public abstract Task CloseAsync(object? result = null);
+
+        #endregion
     }
 }

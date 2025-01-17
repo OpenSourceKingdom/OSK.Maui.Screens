@@ -17,11 +17,16 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
                 throw new InvalidOperationException("Unable to set Blazor component popup without a valid main page.");
             }
 
+            componentProvider.Reset();
+
             var popupPage = ServiceProvider.GetRequiredService<BlazorPopupComponentPage>();
             popupPage.SetPopupType(popupType);
 
+            var navigation = parentPage?.Navigation ?? Application.Current.MainPage.Navigation;
+            await navigation.PushModalAsync(popupPage);
+
             var component = await componentProvider.AwaitComponentInitializationAsync();
-            return new BlazorPopupComponentHandler((BlazorPopupComponent) component, ServiceProvider.GetRequiredService<INavigation>());
+            return new BlazorPopupComponentHandler((BlazorPopupComponent)component, navigation);
         }
 
         protected override async Task<ComponentBase> NavigateToScreenAsync(string route, Type screenType, CancellationToken cancellationToken)
@@ -31,6 +36,8 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
             {
                 throw new NavigationException("Unable to navigate to blazor component when main page is not set to a content page with a blazor web view.");
             }
+
+            componentProvider.Reset();
 
             var navigationManager = ServiceProvider.GetRequiredService<NavigationManager>();
             navigationManager.NavigateTo(route);
