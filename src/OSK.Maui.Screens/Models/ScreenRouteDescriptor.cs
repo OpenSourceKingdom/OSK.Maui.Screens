@@ -1,6 +1,6 @@
-﻿namespace OSK.Maui.Screens.Internal
+﻿namespace OSK.Maui.Screens.Models
 {
-    internal class ScreenRouteDescriptor(string route, Type screenHandlerType, Type screenType)
+    public class ScreenRouteDescriptor(string route, Type screenHandlerType, Type screenType)
     {
         public string Route => route;
 

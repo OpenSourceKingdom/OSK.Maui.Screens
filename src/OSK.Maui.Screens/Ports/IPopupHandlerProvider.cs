@@ -2,6 +2,7 @@
 {
     public interface IPopupHandlerProvider
     {
-        PopupHandler GetPopupHandler(Type popupType, Page? parentPage = null);
+        ValueTask<PopupHandler> GetPopupHandlerAsync(Type popupType, Page? parentPage = null, 
+            CancellationToken cancellationToken = default);
     }
 }

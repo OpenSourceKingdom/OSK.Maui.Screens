@@ -8,7 +8,7 @@ namespace OSK.Maui.Screens.Ports
     {
         Task<object> NavigateToScreenAsync(ScreenNavigation navigation, CancellationToken cancellationToken = default);
 
-        Task<object?> ShowPopupAsync<TPopup>(PopupNavigation navigation, CancellationToken cancellationToken = default)
+        Task<IPopupWaiter> ShowPopupAsync<TPopup>(PopupNavigation navigation, CancellationToken cancellationToken = default)
             where TPopup : IScreenPopup;
     }
 }

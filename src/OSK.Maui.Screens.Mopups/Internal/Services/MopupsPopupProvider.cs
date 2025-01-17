@@ -7,10 +7,11 @@ namespace OSK.Maui.Screens.Mopups.Internal.Services
     {
         #region PopupHandlerProvider
 
-        protected override PopupHandler GetPopupHandler(Page? parentPage, Type popupType)
+        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(Page? parentPage, Type popupType, 
+            CancellationToken cancellationToken = default)
         {
             var popup = (PopupPage)ServiceProvider.GetRequiredService(popupType);
-            return new MopupsPopupHandler(MopupService.Instance, popup);
+            return new ValueTask<PopupHandler>(new MopupsPopupHandler(MopupService.Instance, popup));
         }
 
         #endregion

@@ -1,6 +1,6 @@
-﻿namespace OSK.Maui.Screens.Internal
+﻿namespace OSK.Maui.Screens.Models
 {
-    internal class PopupDescriptor(Type popupType, Type popupHandlerProviderType)
+    public class PopupDescriptor(Type popupType, Type popupHandlerProviderType)
     {
         public Type PopupType => popupType;
 

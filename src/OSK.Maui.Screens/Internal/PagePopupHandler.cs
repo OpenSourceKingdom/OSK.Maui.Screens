@@ -1,6 +1,8 @@
-﻿namespace OSK.Maui.Screens.Internal
+﻿using OSK.Maui.Screens.Ports;
+
+namespace OSK.Maui.Screens.Internal
 {
-    internal class PagePopupHandler(INavigation navigation, Page popup) : PopupHandler
+    internal class PagePopupHandler(INavigation navigation, Page popup) : PopupHandler((IScreenPopup)popup)
     {
         #region Variables
 

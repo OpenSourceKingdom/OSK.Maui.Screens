@@ -19,16 +19,16 @@ namespace OSK.Maui.Screens.Internal.Services
             return await screenNavigationHandler.NavigateToAsync(navigation.Route, routeDescriptor.ScreenType, cancellationToken);
         }
 
-        public Task<object?> ShowPopupAsync<TPopup>(PopupNavigation navigation, CancellationToken cancellationToken = default) 
+        public async Task<IPopupWaiter> ShowPopupAsync<TPopup>(PopupNavigation navigation, CancellationToken cancellationToken = default) 
             where TPopup : IScreenPopup
         {
             ArgumentNullException.ThrowIfNull(navigation);
 
             var popupDescriptor = GetPopupDescriptorOrThrowAsync(typeof(TPopup));
             var popupHandlerProvider = (IPopupHandlerProvider)serviceProvider.GetRequiredService(popupDescriptor.HandlerProviderType);
-            var popupHandler = popupHandlerProvider.GetPopupHandler(popupDescriptor.PopupType, navigation.ParentPage);
+            var popupHandler = await popupHandlerProvider.GetPopupHandlerAsync(popupDescriptor.PopupType, navigation.ParentPage);
             
-            return popupHandler.WaitForCloseAsync();
+            return popupHandler;
         }
 
         #endregion

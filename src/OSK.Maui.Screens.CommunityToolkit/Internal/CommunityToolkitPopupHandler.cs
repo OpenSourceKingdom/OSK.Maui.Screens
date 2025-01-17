@@ -1,8 +1,9 @@
 ﻿using CommunityToolkit.Maui.Views;
+using OSK.Maui.Screens.Ports;
 
 namespace OSK.Maui.Screens.CommunityToolkit.Internal
 {
-    internal class CommunityToolkitPopupHandler(Popup popup, Page parent) : PopupHandler
+    internal class CommunityToolkitPopupHandler(Popup popup, Page parent) : PopupHandler((IScreenPopup)popup)
     {
         public override Task CloseAsync(object? result = null)
         {

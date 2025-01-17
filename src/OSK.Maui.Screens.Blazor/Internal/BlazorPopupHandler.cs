@@ -1,8 +1,6 @@
-﻿using OSK.Maui.Screens.Blazor.Ports;
-
-namespace OSK.Maui.Screens.Blazor.Internal
+﻿namespace OSK.Maui.Screens.Blazor.Internal
 {
-    internal class BlazorPopupHandler(IBlazorComponentProvider componentProvider, INavigation navigation) : PopupHandler
+    internal class BlazorPopupComponentHandler(BlazorPopupComponent component, INavigation navigation) : PopupHandler(component)
     {
         #region Variables
 
@@ -19,9 +17,8 @@ namespace OSK.Maui.Screens.Blazor.Internal
                 : MainThread.InvokeOnMainThreadAsync(navigation.PopModalAsync);
         }
 
-        public override async Task<object?> WaitForCloseAsync()
+        public override Task<object?> WaitForCloseAsync()
         {
-            await componentProvider.AwaitComponentInitializationAsync();
             return _taskCompletionSource.Task;
         }
     }

@@ -1,9 +1,10 @@
 ﻿using Mopups.Interfaces;
 using Mopups.Pages;
+using OSK.Maui.Screens.Ports;
 
 namespace OSK.Maui.Screens.Mopups.Internal
 {
-    internal class MopupsPopupHandler(IPopupNavigation navigation, PopupPage popup) : PopupHandler
+    internal class MopupsPopupHandler(IPopupNavigation navigation, PopupPage popup) : PopupHandler((IScreenPopup)popup)
     {
         #region Variables
 

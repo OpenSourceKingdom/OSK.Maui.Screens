@@ -2,11 +2,11 @@ using Microsoft.AspNetCore.Components.WebView.Maui;
 
 namespace OSK.Maui.Screens.Blazor;
 
-public partial class BlazorPopupPage : ContentPage
+public partial class BlazorPopupComponentPage : ContentPage
 {
     #region Constructors
 
-    public BlazorPopupPage()
+    public BlazorPopupComponentPage()
     {
         InitializeComponent();
     }

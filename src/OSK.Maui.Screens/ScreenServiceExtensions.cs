@@ -30,25 +30,26 @@ namespace OSK.Maui.Screens
 
         #region Popups
 
-        public static Task ShowPopupAsync<TPopup>(this IScreenService screenService, Page? parent = null,
+        public static async Task<object?> ShowPopupAsync<TPopup>(this IScreenService screenService, Page? parent = null,
             CancellationToken cancellationToken = default)
             where TPopup: IScreenPopup
         {
-            return screenService.ShowPopupAsync<TPopup>(new PopupNavigation(parent), cancellationToken);
+            var popupWaiter = await screenService.ShowPopupAsync<TPopup>(new PopupNavigation(parent), cancellationToken);
+            return await popupWaiter.WaitForCloseAsync();
         }
 
-        public static async Task ShowPopupAsync<TPopup, TParameters>(this IScreenService screenService, TParameters parameters,
+        public static async Task<object?> ShowPopupAsync<TPopup, TParameters>(this IScreenService screenService, TParameters parameters,
              Page? parent = null, CancellationToken cancellationToken = default)
             where TPopup : IScreenPopup<TParameters>
         {
-            var popup = await screenService.ShowPopupAsync<TPopup>(new PopupNavigation(parent), cancellationToken);
-            if (popup is IScreenPopup<TParameters> typedPopup)
+            var popupWaiter = await screenService.ShowPopupAsync<TPopup>(new PopupNavigation(parent), cancellationToken);
+            if (popupWaiter.Popup is IScreenPopup<TParameters> typedPopup)
             {
                 await typedPopup.InitializePopupAsync(parameters);
-                return;
+                return await popupWaiter.WaitForCloseAsync();
             }
 
-            throw new InvalidNavigationException($"Unable to show popup since the popup was expected to be of type {typeof(IScreenPopup<TParameters>).FullName} but was {popup.GetType().FullName}.");
+            throw new InvalidNavigationException($"Unable to show popup since the popup was expected to be of type {typeof(IScreenPopup<TParameters>).FullName} but was {popupWaiter.GetType().FullName}.");
         }
 
         #endregion

@@ -1,5 +1,5 @@
-﻿using OSK.Maui.Screens.Internal;
-using OSK.Maui.Screens.Internal.Services;
+﻿using OSK.Maui.Screens.Internal.Services;
+using OSK.Maui.Screens.Models;
 using OSK.Maui.Screens.Ports;
 
 namespace OSK.Maui.Screens
@@ -22,9 +22,22 @@ namespace OSK.Maui.Screens
         public static IServiceCollection AddScreen<TScreen, TScreenNavigation>(this IServiceCollection services, string route)
             where TScreenNavigation : IScreenNavigationHandler
         {
+            services.AddScreen(route, typeof(TScreen), typeof(TScreenNavigation));
+
+            return services;
+        }
+
+        public static IServiceCollection AddScreen(this IServiceCollection services, string route, Type screenType, 
+            Type navigationHandlerType)
+        {
+            if (!navigationHandlerType.IsAssignableTo(typeof(IScreenNavigationHandler)))
+            {
+                throw new InvalidOperationException($"The provided Navigation Handler type is not a valid navigation handler.");
+            }
+
             services.AddTransient(_ => new ScreenRouteDescriptor(route,
-                screenHandlerType: typeof(TScreenNavigation),
-                screenType: typeof(TScreen)));
+                screenHandlerType: navigationHandlerType,
+                screenType: screenType));
 
             return services;
         }

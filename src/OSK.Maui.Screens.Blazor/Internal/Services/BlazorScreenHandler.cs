@@ -9,17 +9,19 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
     {
         #region ScreenHandler Overrides
 
-        protected override PopupHandler GetPopupHandler(Page? parentPage, Type popupType)
+        protected override async ValueTask<PopupHandler> GetPopupHandlerAsync(Page? parentPage, Type popupType,
+            CancellationToken cancellationToken = default)
         {
             if (Application.Current?.MainPage is null)
             {
                 throw new InvalidOperationException("Unable to set Blazor component popup without a valid main page.");
             }
 
-            var popupPage = ServiceProvider.GetRequiredService<BlazorPopupPage>();
+            var popupPage = ServiceProvider.GetRequiredService<BlazorPopupComponentPage>();
             popupPage.SetPopupType(popupType);
 
-            return new BlazorPopupHandler(componentProvider, ServiceProvider.GetRequiredService<INavigation>());
+            var component = await componentProvider.AwaitComponentInitializationAsync();
+            return new BlazorPopupComponentHandler((BlazorPopupComponent) component, ServiceProvider.GetRequiredService<INavigation>());
         }
 
         protected override async Task<ComponentBase> NavigateToScreenAsync(string route, Type screenType, CancellationToken cancellationToken)

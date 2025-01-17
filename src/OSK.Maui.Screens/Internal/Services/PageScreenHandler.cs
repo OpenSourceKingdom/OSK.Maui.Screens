@@ -4,18 +4,19 @@
     {
         #region ScreenHandler Overrides
 
-        protected override PopupHandler GetPopupHandler(Page? parentPage, Type popupType)
+        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(Page? parentPage, Type popupType,
+            CancellationToken cancellationToken)
         {
             var popup = (Page)ServiceProvider.GetRequiredService(popupType);
 
             if (parentPage is not null)
             {
-                return new PagePopupHandler(parentPage.Navigation, popup);
+                return new ValueTask<PopupHandler>(new PagePopupHandler(parentPage.Navigation, popup));
             }
 
             if (Shell.Current is not null)
             {
-                return new PagePopupHandler(Shell.Current.Navigation, popup);
+                return new ValueTask<PopupHandler>(new PagePopupHandler(Shell.Current.Navigation, popup));
             }
 
             if (Application.Current?.MainPage is null)
@@ -23,7 +24,7 @@
                 throw new InvalidNavigationException("Unable to create a popup without a current application set.");
             }
 
-            return new PagePopupHandler(Application.Current.MainPage.Navigation, popup);
+            return new ValueTask<PopupHandler>(new PagePopupHandler(Application.Current.MainPage.Navigation, popup));
         }
 
         protected override async Task<Page> NavigateToScreenAsync(string route, Type screenType, CancellationToken cancellationToken)
