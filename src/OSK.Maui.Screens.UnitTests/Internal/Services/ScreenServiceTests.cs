@@ -2,6 +2,7 @@
 using OSK.Maui.Screens.Internal.Services;
 using OSK.Maui.Screens.Models;
 using OSK.Maui.Screens.Ports;
+using OSK.Maui.Screens.UnitTests.Helpers;
 using Xunit;
 
 namespace OSK.Maui.Screens.UnitTests.Internal.Services
@@ -101,23 +102,25 @@ namespace OSK.Maui.Screens.UnitTests.Internal.Services
             // Arrange
             _popupDescriptors.Add(new PopupDescriptor(typeof(IScreenPopup), typeof(IScreenPopup)));
 
-            var mockPopupHandler = new Mock<PopupHandler>();
-            mockPopupHandler.Setup(m => m.WaitForCloseAsync())
-                .ReturnsAsync(1);
+            var mockScreenPopup = new Mock<IScreenPopup>();
+
+            var mockPopupHandler = new TestPopupHandler(mockScreenPopup.Object);
+            mockPopupHandler.CloseResult = 1;
 
             var mockPopupProvider = new Mock<IPopupHandlerProvider>();
-            mockPopupProvider.Setup(m => m.GetPopupHandler(It.IsAny<Type>(), It.IsAny<Page>()))
-                .Returns(mockPopupHandler.Object);
+            mockPopupProvider.Setup(m => m.GetPopupHandlerAsync(It.IsAny<Type>(), It.IsAny<Page>(), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(mockPopupHandler);
 
             _mockServiceProvider.Setup(m => m.GetService(It.IsAny<Type>()))
                 .Returns(mockPopupProvider.Object);
 
-
             // Act
-            var result = await _screenService.ShowPopupAsync<IScreenPopup>(new PopupNavigation(null));
+            var popupAwaiter = await _screenService.ShowPopupAsync<IScreenPopup>(new PopupNavigation(null));
+            var result = await popupAwaiter.WaitForCloseAsync();
 
             // Assert
             Assert.Equal(1, result);
+            mockScreenPopup.VerifySet(m => m.PopupHandler = mockPopupHandler, Times.Once);
         }
 
         #endregion
