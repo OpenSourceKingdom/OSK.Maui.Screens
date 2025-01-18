@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 using OSK.Maui.Screens.Blazor.Ports;
+using OSK.Maui.Screens.Exceptions;
+using OSK.Maui.Screens.Models;
 
 namespace OSK.Maui.Screens.Blazor.Internal.Services
 {
@@ -9,18 +11,18 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
     {
         #region ScreenHandler Overrides
 
-        protected override async ValueTask<PopupHandler> GetPopupHandlerAsync(Page? parentPage, Type popupType,
+        protected override async ValueTask<PopupHandler> GetPopupHandlerAsync(PopupDescriptor descriptor, Page? parentPage,
             CancellationToken cancellationToken = default)
         {
             if (Application.Current?.MainPage is null)
             {
-                throw new InvalidOperationException("Unable to set Blazor component popup without a valid main page.");
+                throw new ScreenPopupNavigationException("Unable to set Blazor component popup without a valid main page.");
             }
 
             componentProvider.Reset();
 
             var popupPage = ServiceProvider.GetRequiredService<BlazorPopupComponentPage>();
-            popupPage.SetPopupType(popupType);
+            popupPage.SetPopupType(descriptor.PopupType, parentPage ?? Application.Current.MainPage);
 
             var navigation = parentPage?.Navigation ?? Application.Current.MainPage.Navigation;
             await navigation.PushModalAsync(popupPage);
@@ -29,18 +31,18 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
             return new BlazorPopupComponentHandler((BlazorPopupComponent)component, navigation);
         }
 
-        protected override async Task<ComponentBase> NavigateToScreenAsync(string route, Type screenType, CancellationToken cancellationToken)
+        protected override async Task<ComponentBase> NavigateToScreenAsync(ScreenRouteDescriptor descriptor, CancellationToken cancellationToken)
         {
             if (Application.Current?.MainPage is not ContentPage contentPage
                 || contentPage?.Content is not BlazorWebView)
             {
-                throw new NavigationException("Unable to navigate to blazor component when main page is not set to a content page with a blazor web view.");
+                throw new ScreenNavigationException("Unable to navigate to blazor component when main page is not set to a content page with a blazor web view.");
             }
 
             componentProvider.Reset();
 
             var navigationManager = ServiceProvider.GetRequiredService<NavigationManager>();
-            navigationManager.NavigateTo(route);
+            navigationManager.NavigateTo(descriptor.Route);
 
             return await componentProvider.AwaitComponentInitializationAsync();
         }

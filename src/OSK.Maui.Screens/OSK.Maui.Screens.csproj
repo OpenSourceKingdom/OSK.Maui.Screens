@@ -12,7 +12,7 @@
 		<Nullable>enable</Nullable>
 
 		<Description>
-			A screen management library that helps with navigating screens, popups, and other related routing in MAUI applications. Provides a means of integrating various popular popup/screen libraries as well.
+			A screen management library that helps with navigating screens, popups, and other related routing in MAUI applications.
 		</Description>
 		<PackageTags>OpenSourceKingdom, OpenSource, Maui, Screen, Popup, route, routing, navigation, nav, handler, provider, app</PackageTags>
 		<Title>OSK.Maui.Screens</Title>

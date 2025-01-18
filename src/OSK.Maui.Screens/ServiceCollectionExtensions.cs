@@ -11,6 +11,7 @@ namespace OSK.Maui.Screens
         public static IServiceCollection AddScreenNavigation(this IServiceCollection services)
         {
             services.AddTransient<IScreenService, ScreenService>();
+            services.AddTransient<IScreenCommandFactory, ScreenCommandFactory>();
 
             return services;
         }
@@ -30,24 +31,37 @@ namespace OSK.Maui.Screens
         public static IServiceCollection AddScreen(this IServiceCollection services, string route, Type screenType, 
             Type navigationHandlerType)
         {
-            if (!navigationHandlerType.IsAssignableTo(typeof(IScreenNavigationHandler)))
+            return services.AddScreenDescriptor(new ScreenRouteDescriptor(route, screenType, navigationHandlerType));
+        }
+
+        public static IServiceCollection AddScreenDescriptor(this IServiceCollection services, ScreenRouteDescriptor descriptor)
+        {
+            ArgumentNullException.ThrowIfNull(descriptor);
+            if (!descriptor.ScreenHandlerType.IsAssignableTo(typeof(IScreenNavigationHandler)))
             {
                 throw new InvalidOperationException($"The provided Navigation Handler type is not a valid navigation handler.");
             }
 
-            services.AddTransient(_ => new ScreenRouteDescriptor(route,
-                screenHandlerType: navigationHandlerType,
-                screenType: screenType));
-
+            services.AddTransient(_ => descriptor);
             return services;
         }
 
         public static IServiceCollection AddPopupProvider<TPopupType, TProviderType>(this IServiceCollection services)
             where TPopupType : IScreenPopup
-            where TProviderType : IPopupHandlerProvider
+            where TProviderType : IPopupProvider
         {
-            services.AddTransient(_ => new PopupDescriptor(typeof(TPopupType), typeof(TProviderType)));
+            return services.AddPopupProvider(new PopupDescriptor(typeof(TPopupType), typeof(TProviderType)));
+        }
 
+        public static IServiceCollection AddPopupProvider(this IServiceCollection services, PopupDescriptor descriptor)
+        {
+            ArgumentNullException.ThrowIfNull(descriptor);
+            if (!descriptor.PopupType.IsAssignableTo(typeof(IScreenPopup)))
+            {
+                throw new InvalidOperationException($"The provided Navigation Handler type is not a valid navigation handler.");
+            }
+
+            services.AddTransient(_ => descriptor);
             return services;
         }
 

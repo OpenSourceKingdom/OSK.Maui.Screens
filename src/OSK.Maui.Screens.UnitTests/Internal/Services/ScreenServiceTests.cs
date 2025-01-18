@@ -72,7 +72,7 @@ namespace OSK.Maui.Screens.UnitTests.Internal.Services
             var mockScreen = new object();
 
             var mockNavigationHandler = new Mock<IScreenNavigationHandler>();
-            mockNavigationHandler.Setup(m => m.NavigateToAsync(It.IsAny<string>(), It.IsAny<Type>(), It.IsAny<CancellationToken>()))
+            mockNavigationHandler.Setup(m => m.NavigateToAsync(It.IsAny<ScreenRouteDescriptor>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockScreen);
 
             _mockServiceProvider.Setup(m => m.GetService(It.IsAny<Type>()))
@@ -107,8 +107,8 @@ namespace OSK.Maui.Screens.UnitTests.Internal.Services
             var mockPopupHandler = new TestPopupHandler(mockScreenPopup.Object);
             mockPopupHandler.CloseResult = 1;
 
-            var mockPopupProvider = new Mock<IPopupHandlerProvider>();
-            mockPopupProvider.Setup(m => m.GetPopupHandlerAsync(It.IsAny<Type>(), It.IsAny<Page>(), It.IsAny<CancellationToken>()))
+            var mockPopupProvider = new Mock<IPopupProvider>();
+            mockPopupProvider.Setup(m => m.GetPopupAsync(It.IsAny<PopupDescriptor>(), It.IsAny<Page>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(mockPopupHandler);
 
             _mockServiceProvider.Setup(m => m.GetService(It.IsAny<Type>()))

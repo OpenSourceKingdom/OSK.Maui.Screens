@@ -16,6 +16,7 @@ namespace OSK.Maui.Screens
         #endregion
 
         #region IPopupHandler, IPopupWaiter
+
         public IScreenPopup Popup { get; private set; }
 
         public abstract Task<object?> WaitForCloseAsync();

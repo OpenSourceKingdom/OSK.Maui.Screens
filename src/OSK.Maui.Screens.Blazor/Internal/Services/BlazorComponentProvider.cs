@@ -3,6 +3,10 @@ using OSK.Maui.Screens.Blazor.Ports;
 
 namespace OSK.Maui.Screens.Blazor.Internal.Services
 {
+    /// <summary>
+    /// Provides a mechanism to get a <see cref="ComponentBase"/> after it has been initialized since there is no other direct
+    /// way to get the component
+    /// </summary>
     internal class BlazorComponentProvider : IBlazorComponentProvider
     {
         #region Variables

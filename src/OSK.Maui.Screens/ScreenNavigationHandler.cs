@@ -1,4 +1,6 @@
-﻿using OSK.Maui.Screens.Ports;
+﻿using OSK.Maui.Screens.Exceptions;
+using OSK.Maui.Screens.Models;
+using OSK.Maui.Screens.Ports;
 
 namespace OSK.Maui.Screens
 {
@@ -12,19 +14,21 @@ namespace OSK.Maui.Screens
 
         #region IScreenNavigationHandler
 
-        public async Task<object> NavigateToAsync(string route, Type screenType, CancellationToken cancellationToken = default)
+        public async Task<object> NavigateToAsync(ScreenRouteDescriptor descriptor, CancellationToken cancellationToken = default)
         {
-            ArgumentException.ThrowIfNullOrWhiteSpace(route);
-            ArgumentNullException.ThrowIfNull(screenType);
-            if (!screenType.IsAssignableTo(typeof(TScreen)))
+            ArgumentException.ThrowIfNullOrWhiteSpace(descriptor?.Route);
+            ArgumentNullException.ThrowIfNull(descriptor.ScreenHandlerType);
+            ArgumentNullException.ThrowIfNull(descriptor.ScreenType);
+
+            if (!descriptor.ScreenType.IsAssignableTo(typeof(TScreen)))
             {
-                throw new InvalidNavigationException($"Navigation Handler {GetType().FullName} can only navigate to screens of type {typeof(TScreen).FullName}.");
+                throw new ScreenNavigationException($"Navigation Handler {GetType().FullName} can only navigate to screens of type {typeof(TScreen).FullName}.");
             }
 
-            var screen = await NavigateToScreenAsync(route, screenType, cancellationToken);
+            var screen = await NavigateToScreenAsync(descriptor, cancellationToken);
             if (screen is null)
             {
-                throw new InvalidNavigationException("Unable to navigate to screen.");
+                throw new ScreenNavigationException("Unable to navigate to screen.");
             }
 
             return screen;
@@ -34,7 +38,7 @@ namespace OSK.Maui.Screens
 
         #region Helpers
 
-        protected abstract Task<TScreen> NavigateToScreenAsync(string route, Type screenType, CancellationToken cancellationToken);
+        protected abstract Task<TScreen> NavigateToScreenAsync(ScreenRouteDescriptor descriptor, CancellationToken cancellationToken);
 
         #endregion
     }

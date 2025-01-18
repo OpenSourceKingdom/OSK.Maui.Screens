@@ -9,18 +9,18 @@ public partial class BlazorPopupComponentPage : ContentPage
     public BlazorPopupComponentPage()
     {
         InitializeComponent();
-
-        WidthRequest = Application.Current!.MainPage!.Width / 2;
-        HeightRequest = Application.Current.MainPage.Height / 2;
-        TranslationX += Application.Current.MainPage.Width * .1;
     }
 
     #endregion
 
     #region Helpers
 
-    public void SetPopupType(Type popupType)
+    public void SetPopupType(Type popupType, Page parentPage)
     {
+        WidthRequest = Application.Current!.MainPage!.Width / 2;
+        HeightRequest = Application.Current.MainPage.Height / 2;
+        TranslationX += Application.Current.MainPage.Width * .1;
+
         blazorWebView.RootComponents.Add(new RootComponent()
         {
             ComponentType = popupType,

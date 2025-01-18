@@ -7,20 +7,20 @@ namespace OSK.Maui.Screens
     {
         #region Navigation
 
-        public static Task NavigateToScreenAsync(this IScreenService screenService, string route,
+        public static Task<object> NavigateToScreenAsync(this IScreenService screenService, string route,
             CancellationToken cancellationToken = default)
         {
             return screenService.NavigateToScreenAsync(new ScreenNavigation(route), cancellationToken);
         }
 
-        public static async Task NavigateToScreenAsync<TParameters>(this IScreenService screenService, string route,
+        public static async Task<object> NavigateToScreenAsync<TParameters>(this IScreenService screenService, string route,
             TParameters parameters, CancellationToken cancellationToken = default)
         {
             var screen = await screenService.NavigateToScreenAsync(new ScreenNavigation(route), cancellationToken);
             if (screen is IScreen<TParameters> typedScreen)
             {
                 await typedScreen.InitializeScreenAsync(parameters);
-                return;
+                return typedScreen;
             }
 
             throw new InvalidNavigationException($"Unable to navigate to route {route} since the screen was expected to be of type {typeof(IScreen<TParameters>).FullName} but was {screen.GetType().FullName}.");

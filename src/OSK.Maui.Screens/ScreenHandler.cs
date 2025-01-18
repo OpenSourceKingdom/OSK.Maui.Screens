@@ -1,4 +1,6 @@
-﻿using OSK.Maui.Screens.Ports;
+﻿using OSK.Maui.Screens.Exceptions;
+using OSK.Maui.Screens.Models;
+using OSK.Maui.Screens.Ports;
 
 namespace OSK.Maui.Screens
 {
@@ -12,31 +14,35 @@ namespace OSK.Maui.Screens
 
         #region IScreenHandler
 
-        public ValueTask<PopupHandler> GetPopupHandlerAsync(Type popupType, Page? parentPage = null, 
+        public ValueTask<PopupHandler> GetPopupAsync(PopupDescriptor descriptor, Page? parentPage = null,
             CancellationToken cancellationToken = default)
         {
-            ArgumentNullException.ThrowIfNull(popupType);
-            if (!popupType.IsAssignableTo(typeof(TScreen)))
+            ArgumentNullException.ThrowIfNull(descriptor?.PopupType);
+            ArgumentNullException.ThrowIfNull(descriptor.PopupProviderType);
+
+            if (!descriptor.PopupType.IsAssignableTo(typeof(TScreen)))
             {
-                throw new InvalidNavigationException($"Popup Provider of type {GetType().FullName} can only create popups of type {typeof(TScreen).FullName}.");
+                throw new ScreenPopupNavigationException($"Popup Provider of type {GetType().FullName} can only create popups of type {typeof(TScreen).FullName}.");
             }
 
-            return GetPopupHandlerAsync(parentPage, popupType, cancellationToken);
+            return GetPopupHandlerAsync(descriptor, parentPage, cancellationToken);
         }
 
-        public async Task<object> NavigateToAsync(string route, Type screenType, CancellationToken cancellationToken = default)
+        public async Task<object> NavigateToAsync(ScreenRouteDescriptor descriptor, CancellationToken cancellationToken = default)
         {
-            ArgumentException.ThrowIfNullOrWhiteSpace(route);
-            ArgumentNullException.ThrowIfNull(screenType);
-            if (!screenType.IsAssignableTo(typeof(TScreen)))
+            ArgumentException.ThrowIfNullOrWhiteSpace(descriptor?.Route);
+            ArgumentNullException.ThrowIfNull(descriptor.ScreenHandlerType);
+            ArgumentNullException.ThrowIfNull(descriptor.ScreenType);
+
+            if (!descriptor.ScreenType.IsAssignableTo(typeof(TScreen)))
             {
-                throw new InvalidNavigationException($"Navigation Handler {GetType().FullName} can only navigate to screens of type {typeof(TScreen).FullName}.");
+                throw new ScreenNavigationException($"Navigation Handler {GetType().FullName} can only navigate to screens of type {typeof(TScreen).FullName}.");
             }
 
-            var screen = await NavigateToScreenAsync(route, screenType, cancellationToken);
+            var screen = await NavigateToScreenAsync(descriptor, cancellationToken);
             if (screen is null)
             {
-                throw new InvalidNavigationException("Unable to navigate to screen.");
+                throw new ScreenNavigationException("Unable to navigate to screen.");
             }
 
             return screen;
@@ -46,8 +52,8 @@ namespace OSK.Maui.Screens
 
         #region Helpers
 
-        protected abstract ValueTask<PopupHandler> GetPopupHandlerAsync(Page? parentPage, Type popupType, CancellationToken cancellationToken = default);
-        protected abstract Task<TScreen> NavigateToScreenAsync(string route, Type screenType, CancellationToken cancellationToken);
+        protected abstract ValueTask<PopupHandler> GetPopupHandlerAsync(PopupDescriptor descriptor, Page? parentPage, CancellationToken cancellationToken = default);
+        protected abstract Task<TScreen> NavigateToScreenAsync(ScreenRouteDescriptor descriptor, CancellationToken cancellationToken);
 
         #endregion
     }

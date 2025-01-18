@@ -4,6 +4,6 @@
     {
         public Type PopupType => popupType;
 
-        public Type HandlerProviderType => popupHandlerProviderType;
+        public Type PopupProviderType => popupHandlerProviderType;
     }
 }
