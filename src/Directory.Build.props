@@ -1,0 +1,10 @@
+<Project>
+	<PropertyGroup>	
+		<RepositoryUrl>https://github.com/OpenSourceKingdom/OSK.Maui.Screens</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>CS1591</NoWarn>
+		<Authors>BlankDev117</Authors>
+	</PropertyGroup>
+</Project>
