@@ -1,6 +1,7 @@
 ﻿using Mopups.Pages;
 using Mopups.Services;
 using OSK.Maui.Screens.Models;
+using PopupNavigation = OSK.Maui.Screens.Models.PopupNavigation;
 
 namespace OSK.Maui.Screens.Mopups.Internal.Services
 {
@@ -8,10 +9,10 @@ namespace OSK.Maui.Screens.Mopups.Internal.Services
     {
         #region PopupHandlerProvider
 
-        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(PopupDescriptor descriptor, Page? parentPage, 
+        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(PopupNavigation popupNavigation, 
             CancellationToken cancellationToken = default)
         {
-            var popup = (PopupPage)ServiceProvider.GetRequiredService(descriptor.PopupType);
+            var popup = (PopupPage)ServiceProvider.GetRequiredService(popupNavigation.PopupType);
             return new ValueTask<PopupHandler>(new MopupsPopupHandler(MopupService.Instance, popup));
         }
 

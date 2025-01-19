@@ -31,7 +31,8 @@ namespace OSK.Maui.Screens
         public static IServiceCollection AddScreen(this IServiceCollection services, string route, Type screenType, 
             Type navigationHandlerType)
         {
-            return services.AddScreenDescriptor(new ScreenRouteDescriptor(route, screenType, navigationHandlerType));
+            Routing.RegisterRoute(route, screenType);
+            return services.AddScreenDescriptor(new ScreenRouteDescriptor(route, navigationHandlerType, screenType));
         }
 
         public static IServiceCollection AddScreenDescriptor(this IServiceCollection services, ScreenRouteDescriptor descriptor)

@@ -7,14 +7,14 @@ namespace OSK.Maui.Screens.Internal.Services
     {
         #region ScreenHandler Overrides
 
-        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(PopupDescriptor descriptor, Page? parentPage,
+        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(PopupNavigation popupNavigation,
             CancellationToken cancellationToken)
         {
-            var popup = (Page)ServiceProvider.GetRequiredService(descriptor.PopupType);
+            var popup = (Page)ServiceProvider.GetRequiredService(popupNavigation.PopupType);
 
-            if (parentPage is not null)
+            if (popupNavigation.ParentPage is not null)
             {
-                return new ValueTask<PopupHandler>(new PagePopupHandler(parentPage.Navigation, popup));
+                return new ValueTask<PopupHandler>(new PagePopupHandler(popupNavigation.ParentPage.Navigation, popup));
             }
 
             if (Shell.Current is not null)

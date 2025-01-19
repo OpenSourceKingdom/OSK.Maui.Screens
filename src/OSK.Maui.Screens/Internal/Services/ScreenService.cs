@@ -20,15 +20,14 @@ namespace OSK.Maui.Screens.Internal.Services
             return await screenNavigationHandler.NavigateToAsync(routeDescriptor, cancellationToken);
         }
 
-        public async Task<IPopupWaiter> ShowPopupAsync<TPopup>(PopupNavigation navigation, CancellationToken cancellationToken = default) 
-            where TPopup : IScreenPopup
+        public async Task<IPopupWaiter> ShowPopupAsync<TPopupNavigation>(TPopupNavigation navigation, CancellationToken cancellationToken = default) 
+            where TPopupNavigation : PopupNavigation
         {
-            ArgumentNullException.ThrowIfNull(navigation);
+            ArgumentNullException.ThrowIfNull(navigation?.PopupType);;
 
-            var popupDescriptor = GetPopupDescriptorOrThrowAsync(typeof(TPopup));
-
+            var popupDescriptor = GetPopupDescriptorOrThrowAsync(navigation.PopupType);
             var popupHandlerProvider = (IPopupProvider)serviceProvider.GetRequiredService(popupDescriptor.PopupProviderType);
-            var popupHandler = await popupHandlerProvider.GetPopupAsync(popupDescriptor, navigation.ParentPage);
+            var popupHandler = await popupHandlerProvider.GetPopupAsync(navigation);
 
             return popupHandler;
         }
@@ -47,9 +46,9 @@ namespace OSK.Maui.Screens.Internal.Services
 
         private PopupDescriptor GetPopupDescriptorOrThrowAsync(Type popupType)
         {
-            var popupDescriptor = popupDescriptors.FirstOrDefault(descriptor => descriptor.PopupType == popupType);
+            var popupDescriptor = popupDescriptors.FirstOrDefault(descriptor => descriptor.PopupType.IsAssignableFrom(popupType));
             return popupDescriptor is null
-                ? throw new ScreenNavigationException($"The provided popup type {popupType.FullName} does not have a valid popup context provider. Ensure an associated context provider has been added to the DI container for the popup.")
+                ? throw new ScreenPopupNavigationException($"The provided popup type {popupType.FullName} does not have a valid popup context provider. Ensure an associated context provider has been added to the DI container for the popup.")
                 : popupDescriptor;
         }
 

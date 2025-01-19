@@ -11,7 +11,7 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
     {
         #region Variables
 
-        private TaskCompletionSource<ComponentBase> _taskCompletionSource = new();
+        private TaskCompletionSource<BlazorComponent> _taskCompletionSource = new();
 
         #endregion
 
@@ -22,12 +22,12 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
             _taskCompletionSource = new();
         }
 
-        public Task<ComponentBase> AwaitComponentInitializationAsync()
+        public Task<BlazorComponent> AwaitComponentInitializationAsync()
         {
             return _taskCompletionSource.Task;
         }
 
-        public void SetInitializedComponent(ComponentBase component)
+        public void SetInitializedComponent(BlazorComponent component)
         {
             if (_taskCompletionSource.Task.IsCompleted)
             {

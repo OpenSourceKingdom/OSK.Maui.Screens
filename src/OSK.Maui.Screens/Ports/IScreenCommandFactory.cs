@@ -27,11 +27,9 @@ namespace OSK.Maui.Screens.Ports
         /// <summary>
         /// Creates a command that will initiate displaying a popup
         /// </summary>
-        /// <typeparam name="TPopup">The type of popup to show</typeparam>
         /// <param name="navigation">The popup navigation</param>
         /// <returns>A command that will display a popup using the specified navigation information</returns>
-        IScreenPopupCommand CreatePopupCommand<TPopup>(PopupNavigation navigation)
-            where TPopup : IScreenPopup;
+        IScreenPopupCommand CreatePopupCommand(PopupNavigation navigation);
 
         /// <summary>
         /// Creates a command that will initiate displaying a popup

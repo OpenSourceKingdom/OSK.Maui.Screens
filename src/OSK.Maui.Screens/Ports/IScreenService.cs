@@ -20,11 +20,11 @@ namespace OSK.Maui.Screens.Ports
         /// <summary>
         /// Shows the provided popup type to the user
         /// </summary>
-        /// <typeparam name="TPopup">The type of popup to display</typeparam>
+        /// <typeparam name="TPopupNavigation">The type of popup navgia</typeparam>
         /// <param name="navigation">The popup navigation arguments</param>
         /// <param name="cancellationToken">A token to cancel the operation</param>
         /// <returns>An <see cref="IPopupWaiter"/> associated with the popup</returns>
-        Task<IPopupWaiter> ShowPopupAsync<TPopup>(PopupNavigation navigation, CancellationToken cancellationToken = default)
-            where TPopup : IScreenPopup;
+        Task<IPopupWaiter> ShowPopupAsync<TPopupNavigation>(TPopupNavigation navigation, CancellationToken cancellationToken = default)
+            where TPopupNavigation : PopupNavigation;
     }
 }

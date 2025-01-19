@@ -34,7 +34,7 @@ namespace OSK.Maui.Screens
             CancellationToken cancellationToken = default)
             where TPopup: IScreenPopup
         {
-            var popupWaiter = await screenService.ShowPopupAsync<TPopup>(new PopupNavigation(parent), cancellationToken);
+            var popupWaiter = await screenService.ShowPopupAsync(new PopupNavigation(typeof(TPopup), parent), cancellationToken);
             return await popupWaiter.WaitForCloseAsync();
         }
 
@@ -42,7 +42,7 @@ namespace OSK.Maui.Screens
              Page? parent = null, CancellationToken cancellationToken = default)
             where TPopup : IScreenPopup<TParameters>
         {
-            var popupWaiter = await screenService.ShowPopupAsync<TPopup>(new PopupNavigation(parent), cancellationToken);
+            var popupWaiter = await screenService.ShowPopupAsync(new PopupNavigation(typeof(TPopup), parent), cancellationToken);
             if (popupWaiter.Popup is IScreenPopup<TParameters> typedPopup)
             {
                 await typedPopup.InitializePopupAsync(parameters);

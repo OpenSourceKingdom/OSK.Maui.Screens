@@ -12,11 +12,9 @@ namespace OSK.Maui.Screens.Ports
         /// <summary>
         /// Gets a <see cref="PopupHandler"/> object that manages the interactions between a popup screen and consumers calling the method
         /// </summary>
-        /// <param name="descriptor">The <see cref="PopupDescriptor"/> that describes the popup to show users</param>
-        /// <param name="parentPage">A page that represents the anchored parent for the displayed popup</param>
+        /// <param name="popupNavigation">The <see cref="PopupNavigation"/> that describes the popup to show users</param>
         /// <param name="cancellationToken">A token to cancel the operation</param>
         /// <returns>The popup handler that was created by the provider</returns>
-        ValueTask<PopupHandler> GetPopupAsync(PopupDescriptor descriptor, Page? parentPage = null, 
-            CancellationToken cancellationToken = default);
+        ValueTask<PopupHandler> GetPopupAsync(PopupNavigation popupNavigation, CancellationToken cancellationToken = default);
     }
 }

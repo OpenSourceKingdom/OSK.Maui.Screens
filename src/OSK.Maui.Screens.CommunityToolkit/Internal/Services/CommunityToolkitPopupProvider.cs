@@ -7,11 +7,10 @@ namespace OSK.Maui.Screens.CommunityToolkit.Internal.Services
     {
         #region PopupHandlerProvider
 
-        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(PopupDescriptor descriptor, Page? parentPage,
-            CancellationToken cancellationToken = default)
+        protected override ValueTask<PopupHandler> GetPopupHandlerAsync(PopupNavigation popupNavigation, CancellationToken cancellationToken)
         {
-            var popup = (Popup)ServiceProvider.GetRequiredService(descriptor.PopupType);
-            parentPage ??= Shell.Current.Window.Page ?? Application.Current?.MainPage
+            var popup = (Popup)ServiceProvider.GetRequiredService(popupNavigation.PopupType);
+            var parentPage = popupNavigation.ParentPage ?? Shell.Current.Window.Page ?? Application.Current?.MainPage
                 ?? throw new InvalidOperationException("Unable to show CommunityToolkit Popup without a valid parent page.");
 
             return new ValueTask<PopupHandler>(new CommunityToolkitPopupHandler(popup, parentPage));

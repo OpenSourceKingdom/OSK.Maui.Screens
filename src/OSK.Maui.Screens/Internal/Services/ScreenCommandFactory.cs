@@ -23,12 +23,11 @@ namespace OSK.Maui.Screens.Internal.Services
             return ActivatorUtilities.CreateInstance<ScreenNavigationCommand<TParameters>>(serviceProvider, navigation, parameters);
         }
 
-        public IScreenPopupCommand CreatePopupCommand<TPopup>(PopupNavigation navigation) 
-            where TPopup : IScreenPopup
+        public IScreenPopupCommand CreatePopupCommand(PopupNavigation navigation)
         {
             ArgumentNullException.ThrowIfNull(navigation);
 
-            return ActivatorUtilities.CreateInstance<ScreenPopupCommand<TPopup>>(serviceProvider, navigation);
+            return ActivatorUtilities.CreateInstance<ScreenPopupCommand>(serviceProvider, navigation);
         }
 
         public IScreenPopupCommand CreatePopupCommand<TPopup, TParameters>(PopupNavigation navigation, TParameters parameters) 

@@ -3,8 +3,7 @@ using OSK.Maui.Screens.Ports;
 
 namespace OSK.Maui.Screens.Commands
 {
-    public class ScreenPopupCommand<TPopup>(IScreenService screenService, PopupNavigation navigation) : IScreenPopupCommand
-        where TPopup : IScreenPopup
+    public class ScreenPopupCommand(IScreenService screenService, PopupNavigation navigation) : IScreenPopupCommand
     {
         #region IScreenPopupCommand
 
@@ -20,9 +19,10 @@ namespace OSK.Maui.Screens.Commands
             _ = ExecuteAsync();
         }
 
-        public Task<object?> ExecuteAsync()
+        public async Task<object?> ExecuteAsync()
         {
-            return screenService.ShowPopupAsync<TPopup>(navigation.ParentPage);
+            var popupWaiter = await screenService.ShowPopupAsync(navigation);
+            return await popupWaiter.WaitForCloseAsync();
         }
 
         #endregion

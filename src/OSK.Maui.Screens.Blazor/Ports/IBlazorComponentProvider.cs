@@ -8,8 +8,8 @@ namespace OSK.Maui.Screens.Blazor.Ports
     {
         void Reset();
 
-        void SetInitializedComponent(ComponentBase component);
+        void SetInitializedComponent(BlazorComponent component);
 
-        Task<ComponentBase> AwaitComponentInitializationAsync();
+        Task<BlazorComponent> AwaitComponentInitializationAsync();
     }
 }

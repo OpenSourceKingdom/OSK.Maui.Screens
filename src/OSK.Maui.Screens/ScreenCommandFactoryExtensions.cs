@@ -14,11 +14,11 @@ namespace OSK.Maui.Screens
 
         public static IScreenPopupCommand CreatePopupCommand<TPopup>(this IScreenCommandFactory factory, Page? parentPage = null)
             where TPopup : IScreenPopup
-            => factory.CreatePopupCommand<TPopup>(new PopupNavigation(parentPage));
+            => factory.CreatePopupCommand(new PopupNavigation(typeof(TPopup), parentPage));
 
         public static IScreenPopupCommand CreatePopupCommand<TPopup, TParameters>(this IScreenCommandFactory factory,
             TParameters parameters, Page? parentPage = null)
             where TPopup : IScreenPopup<TParameters>
-            => factory.CreatePopupCommand<TPopup, TParameters>(new PopupNavigation(parentPage), parameters);
+            => factory.CreatePopupCommand<TPopup, TParameters>(new PopupNavigation(typeof(TPopup), parentPage), parameters);
     }
 }

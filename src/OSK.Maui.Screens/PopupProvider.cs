@@ -4,7 +4,7 @@ using OSK.Maui.Screens.Ports;
 
 namespace OSK.Maui.Screens
 {
-    public abstract class PopupProvider<TScreen>(IServiceProvider serviceProvider) : IPopupProvider
+    public abstract class PopupProvider<TPopup>(IServiceProvider serviceProvider) : IPopupProvider
     {
         #region Variables
 
@@ -14,25 +14,23 @@ namespace OSK.Maui.Screens
 
         #region IPopupHandlerProvider
 
-        public ValueTask<PopupHandler> GetPopupAsync(PopupDescriptor descriptor, Page? parentPage = null, 
-            CancellationToken cancellationToken = default)
+        public ValueTask<PopupHandler> GetPopupAsync(PopupNavigation popupNavigation, CancellationToken cancellationToken = default)
         {
-            ArgumentNullException.ThrowIfNull(descriptor?.PopupType);
-            ArgumentNullException.ThrowIfNull(descriptor.PopupProviderType);
+            ArgumentNullException.ThrowIfNull(popupNavigation?.PopupType);
 
-            if (!descriptor.PopupType.IsAssignableTo(typeof(TScreen)))
+            if (!popupNavigation.PopupType.IsAssignableTo(typeof(TPopup)))
             {
-                throw new ScreenPopupNavigationException($"Popup Provider of type {GetType().FullName} can only create popups of type {typeof(TScreen).FullName}.");
+                throw new ScreenPopupNavigationException($"Popup Provider of type {GetType().FullName} can only create popups of type {typeof(TPopup).FullName}.");
             }
 
-            return GetPopupHandlerAsync(descriptor, parentPage, cancellationToken);
+            return GetPopupHandlerAsync(popupNavigation, cancellationToken);
         }
 
         #endregion
 
         #region Helpers
 
-        protected abstract ValueTask<PopupHandler> GetPopupHandlerAsync(PopupDescriptor descriptor, Page? parentPage, 
+        protected abstract ValueTask<PopupHandler> GetPopupHandlerAsync(PopupNavigation popupNavigation, 
             CancellationToken cancellationToken);
 
         #endregion

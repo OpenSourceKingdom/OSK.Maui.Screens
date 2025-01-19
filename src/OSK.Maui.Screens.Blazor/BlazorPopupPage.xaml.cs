@@ -1,3 +1,4 @@
+using System.Numerics;
 using Microsoft.AspNetCore.Components.WebView.Maui;
 
 namespace OSK.Maui.Screens.Blazor;
@@ -15,11 +16,12 @@ public partial class BlazorPopupComponentPage : ContentPage
 
     #region Helpers
 
-    public void SetPopupType(Type popupType, Page parentPage)
+    public void SetPopup(Type popupType, Vector2 dimensions, Vector2? translations)
     {
-        WidthRequest = Application.Current!.MainPage!.Width / 2;
-        HeightRequest = Application.Current.MainPage.Height / 2;
-        TranslationX += Application.Current.MainPage.Width * .1;
+        WidthRequest = dimensions.X;
+        HeightRequest = dimensions.Y;
+        TranslationX += translations?.X ?? 0;
+        TranslationY += translations?.Y ?? 0;
 
         blazorWebView.RootComponents.Add(new RootComponent()
         {
