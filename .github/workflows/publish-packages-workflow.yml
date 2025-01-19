@@ -11,7 +11,7 @@ permissions:
     
 jobs:
   publish-nuget:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Get the version
@@ -23,8 +23,8 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
           
-      - name: Install MAUI workload
-        run: dotnet workload install maui
+#      - name: Install MAUI workload
+#        run: dotnet workload install maui
 
           
       - run: dotnet build --configuration Release ./src /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
