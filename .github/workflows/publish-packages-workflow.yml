@@ -30,6 +30,4 @@ jobs:
       - name: Create the package
         run: dotnet pack --configuration Release ./src -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
       - name: Publish the package to Nuget
-        run: |
-          dotnet nuget push ./*.nupkg --api-key ${{ secrets.NUGET_TOKEN }} --source https://api.nuget.org/v3/index.json
-        shell: bash
+        run: dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_TOKEN }} -s https://api.nuget.org/v3/index.json --skip-duplicate
