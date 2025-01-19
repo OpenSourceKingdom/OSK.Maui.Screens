@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components;
-using OSK.Maui.Screens.Models;
+﻿using OSK.Maui.Screens.Models;
 
 namespace OSK.Maui.Screens.Blazor.Models
 {

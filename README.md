@@ -16,6 +16,9 @@ Consumers should add the blazor handlers using the `AddBlazorScreens` extensions
 Additionally, to utilize the blazor specific handling, consumers will want to mark their components with `BlazorComponent` for normal screens
 or `BlazorComponentPopup` for popups.
 
+When displaying a popup for blazor, users can adjust the width/height and x/y translations using the `ShowBlazorPopupAsync` extension, if the default
+popup navigation is insufficient
+
 # OSK.Maui.Screens.CommunityToolkit
 This adds an integration for popups using the community toolkit popups. Consumers should add the community toolkit handler using `AddCommunityScreens`
 in the MauiAppBuilderExtensions
@@ -25,3 +28,6 @@ See https://github.com/CommunityToolkit/Maui for more information.
 This adds an integration for popups using the Mopups library. Consumers should add the mopups handler using the `AddMopupsScreens` in the
 MauiAppBuilderExtensions
 See https://github.com/LuckyDucko/Mopups for more information.
+
+# Contributions and Issues
+Any and all contributions are appreciated! Please be sure to follow the branch naming convention OSK-{issue number}-{deliminated}-{branch}-{name} as current workflows rely on it for automatic issue closure. Please submit issues for discussion and tracking using the github issue tracker.

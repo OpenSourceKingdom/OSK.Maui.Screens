@@ -27,10 +27,10 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
             var popupPage = ServiceProvider.GetRequiredService<BlazorPopupComponentPage>();
 
             var blazorNavigation = popupNavigation as BlazorPopupNavigation;
-            var width = GetDimensionValue(blazorNavigation?.Width, (float)parentPage.Width);
-            var height = GetDimensionValue(blazorNavigation?.Height, (float)parentPage.Height);
-            var xTranslation = GetDimensionValue(blazorNavigation?.XTranslation, (float)parentPage.Width);
-            var yTranslation = GetDimensionValue(blazorNavigation?.YTranslation, (float)parentPage.Height);
+            var width = GetRequestedValueOrDefault(blazorNavigation?.Width, (float)parentPage.Width, (float)parentPage.Width / 2);
+            var height = GetRequestedValueOrDefault(blazorNavigation?.Height, (float)parentPage.Height, (float)parentPage.Height / 2);
+            var xTranslation = GetRequestedValueOrDefault(blazorNavigation?.XTranslation, (float)parentPage.Width, 0);
+            var yTranslation = GetRequestedValueOrDefault(blazorNavigation?.YTranslation, (float)parentPage.Height, 0);
 
             popupPage.SetPopup(popupNavigation.PopupType, new Vector2(width, height), new Vector2(xTranslation, yTranslation));
             await parentPage.Navigation.PushModalAsync(popupPage);
@@ -59,7 +59,7 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
 
         #region Helpers
 
-        private float GetDimensionValue(float? requestedDimension, float parentDimension)
+        private float GetRequestedValueOrDefault(float? requestedDimension, float parentDimension, float defaultValue)
         {
             if (requestedDimension.HasValue)
             {
@@ -68,7 +68,7 @@ namespace OSK.Maui.Screens.Blazor.Internal.Services
                     : parentDimension * requestedDimension.Value;
             }
 
-            return parentDimension / 2;
+            return defaultValue;
         }
 
         #endregion

@@ -1,6 +1,5 @@
 ﻿using Mopups.Pages;
 using Mopups.Services;
-using OSK.Maui.Screens.Models;
 using PopupNavigation = OSK.Maui.Screens.Models.PopupNavigation;
 
 namespace OSK.Maui.Screens.Mopups.Internal.Services
