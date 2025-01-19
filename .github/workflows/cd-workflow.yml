@@ -13,7 +13,7 @@ concurrency:
 jobs:
 
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: [ '8.0.x' ]
@@ -21,12 +21,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
-    - uses: actions/setup-dotnet@v4.0.0
+      uses: actions/setup-dotnet@v1.7.2
       with:
         dotnet-version: ${{ matrix.dotnet-version }}
         
-    - name: Install MAUI workload
-      run: dotnet workload install maui
+#   Need this if the project starts using specific os related code (will need to build with windows/mac)
+#    - name: Install MAUI workload
+#      run: dotnet workload install maui
 
     - name: Restore dependencies
       run: >-
