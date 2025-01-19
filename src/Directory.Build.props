@@ -6,5 +6,6 @@
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<NoWarn>CS1591</NoWarn>
 		<Authors>BlankDev117</Authors>
+		<Version>1.0.0-pre1</Version>
 	</PropertyGroup>
 </Project>
