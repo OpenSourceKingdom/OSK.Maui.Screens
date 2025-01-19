@@ -14,7 +14,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-
+      - name: Get the version
+        id: get_version
+        run: echo "PACKAGE_VERSION=${GITHUB_REF/refs\/tags\//}" >> "$GITHUB_OUTPUT" 
+        shell: bash
       - uses: actions/setup-dotnet@v4.0.0
         with:
           dotnet-version: '8.0.x' # SDK Version to use.
@@ -22,12 +25,7 @@ jobs:
           NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
           
       - name: Install MAUI workload
-        run: dotnet workload install maui
-        
-      - name: Get the version
-        id: get_version
-        run: echo "PACKAGE_VERSION=${GITHUB_REF/refs\/tags\//}" >> "$GITHUB_OUTPUT" 
-          
+        run: dotnet workload install maui         
       - run: dotnet build --configuration Release ./src /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
       - name: Create the package
         run: dotnet pack --configuration Release ./src -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
