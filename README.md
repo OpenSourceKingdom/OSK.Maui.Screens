@@ -7,7 +7,7 @@ to interact with popups and screens of different types with a single source vs. 
 It is important that any page, popup, or other screen wanting to be navigated to has been registered with the internal library
 using one of the `AddScreen` or `AddPopupHandler` methods in the `ServiceCollectionExtensions`. These extensions will require that
 consuming libraries have inherited `IScreen` or `IScreenPopup` respectively, when the methods are called.
-The library will throw errors in the event this is not the case.
+The library will throw errors in the event this is not the case. Most integrations will provide a base class to extend for popup related usage.
 
 # OSK.Maui.Screens.Blazor
 This adds an integration for screen and popup related management using blazor components that are used with Maui Blazor Hybrid applications.
