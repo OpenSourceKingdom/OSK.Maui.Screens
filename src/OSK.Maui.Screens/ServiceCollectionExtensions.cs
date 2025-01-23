@@ -18,7 +18,7 @@ namespace OSK.Maui.Screens
             services.AddTransient<IScreenService, ScreenService>();
             services.AddTransient<IScreenCommandFactory, ScreenCommandFactory>();
             services.AddTransient<PageScreenHandler>();
-            services.AddPagePop<PagePopup>();
+            services.AddPagePopup<PagePopup>();
 
             return services;
         }
@@ -33,7 +33,7 @@ namespace OSK.Maui.Screens
         /// <typeparam name="TPopup">A popup of a page type</typeparam>
         /// <param name="services">The services to add to</param>
         /// <returns>The services for chaining</returns>
-        public static IServiceCollection AddPagePop<TPopup>(this IServiceCollection services)
+        public static IServiceCollection AddPagePopup<TPopup>(this IServiceCollection services)
             where TPopup : Page, IScreenPopup
         {
             services.AddPopupProvider<TPopup, PageScreenHandler>();
