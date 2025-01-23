@@ -27,7 +27,7 @@ namespace OSK.Maui.Screens.Mopups
         /// <param name="builder">The builder to add to</param>
         /// <returns>The builder for chaining</returns>
         public static MauiAppBuilder AddMopupsPopup<TPopup>(this MauiAppBuilder builder)
-            where TPopup : PopupPage, IScreenPopup
+            where TPopup : IScreenPopup
         {
             builder.Services.AddPopupProvider<TPopup, MopupsPopupProvider>();
 
