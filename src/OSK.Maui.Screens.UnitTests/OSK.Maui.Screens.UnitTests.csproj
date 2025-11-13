@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net10.0</TargetFrameworks>
+		<TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 		<OutputType>Library</OutputType>
@@ -19,7 +19,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\OSK.Maui.Screens\OSK.Maui.Screens.csproj" />
+	  <ProjectReference Include="..\OSK.Maui.Screens\OSK.Maui.Screens.csproj">
+	    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+	  </ProjectReference>
 	</ItemGroup>
 
 </Project>
