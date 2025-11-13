@@ -1,22 +1,21 @@
 ﻿using OSK.Maui.Screens.Internal.Services;
 
-namespace OSK.Maui.Screens
+namespace OSK.Maui.Screens;
+
+public static class MauiAppBuilderExtensions
 {
-    public static class MauiAppBuilderExtensions
+    public static MauiAppBuilder AddScreenNavigation(this MauiAppBuilder builder)
     {
-        public static MauiAppBuilder AddScreenNavigation(this MauiAppBuilder builder)
-        {
-            builder.Services.AddScreenNavigation();
+        builder.Services.AddScreenNavigation();
 
-            return builder;
-        }
+        return builder;
+    }
 
-        public static MauiAppBuilder AddPageScreen<TPage>(this MauiAppBuilder builder, string route) 
-            where TPage : Page
-        {
-            builder.Services.AddScreen<TPage, PageScreenHandler>(route);
+    public static MauiAppBuilder AddPageScreen<TPage>(this MauiAppBuilder builder, string route) 
+        where TPage : Page
+    {
+        builder.Services.AddScreen<TPage, PageScreenHandler>(route);
 
-            return builder;
-        }
+        return builder;
     }
 }

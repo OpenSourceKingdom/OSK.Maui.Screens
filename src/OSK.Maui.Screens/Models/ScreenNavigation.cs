@@ -1,7 +1,6 @@
-﻿namespace OSK.Maui.Screens.Models
+﻿namespace OSK.Maui.Screens.Models;
+
+public class ScreenNavigation(string route)
 {
-    public class ScreenNavigation(string route)
-    {
-        public string Route => route;
-    }
+    public string Route => route;
 }

@@ -1,14 +1,13 @@
 ﻿using OSK.Hexagonal.MetaData;
 
-namespace OSK.Maui.Screens.Blazor.Ports
+namespace OSK.Maui.Screens.Blazor.Ports;
+
+[HexagonalIntegration(HexagonalIntegrationType.LibraryProvided)]
+public interface IBlazorComponentProvider
 {
-    [HexagonalIntegration(HexagonalIntegrationType.LibraryProvided)]
-    public interface IBlazorComponentProvider
-    {
-        void Reset();
+    void Reset();
 
-        void SetInitializedComponent(BlazorComponent component);
+    void SetInitializedComponent(BlazorComponent component);
 
-        Task<BlazorComponent> AwaitComponentInitializationAsync();
-    }
+    Task<BlazorComponent> AwaitComponentInitializationAsync();
 }
