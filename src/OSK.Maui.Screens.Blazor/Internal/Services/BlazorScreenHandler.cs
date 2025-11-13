@@ -16,7 +16,7 @@ internal class BlazorScreenHandler(IServiceProvider serviceProvider, IBlazorComp
     protected override async ValueTask<PopupHandler> GetPopupHandlerAsync(PopupNavigation popupNavigation,
         CancellationToken cancellationToken = default)
     {
-        var parentPage = popupNavigation.ParentPage ?? Application.Current?.MainPage;
+        var parentPage = popupNavigation.ParentPage ?? Application.Current?.Windows[0].Page;
         if (parentPage is null)
         {
             throw new ScreenPopupNavigationException("Unable to set Blazor component popup without a valid main or parent page.");
@@ -41,7 +41,7 @@ internal class BlazorScreenHandler(IServiceProvider serviceProvider, IBlazorComp
 
     protected override async Task<BlazorComponent> NavigateToScreenAsync(ScreenRouteDescriptor descriptor, CancellationToken cancellationToken)
     {
-        if (Application.Current?.MainPage is not ContentPage contentPage
+        if (Application.Current?.Windows[0].Page is not ContentPage contentPage
             || contentPage?.Content is not BlazorWebView)
         {
             throw new ScreenNavigationException("Unable to navigate to blazor component when main page is not set to a content page with a blazor web view.");
