@@ -22,12 +22,12 @@ internal class PageScreenHandler(IServiceProvider serviceProvider) : ScreenHandl
             return new ValueTask<PopupHandler>(new PagePopupHandler(Shell.Current.Navigation, popup));
         }
 
-        if (Application.Current?.MainPage is null)
+        if (Application.Current?.Windows[0] is null)
         {
             throw new ScreenPopupNavigationException("Unable to create a popup without a current application set.");
         }
 
-        return new ValueTask<PopupHandler>(new PagePopupHandler(Application.Current.MainPage.Navigation, popup));
+        return new ValueTask<PopupHandler>(new PagePopupHandler(Application.Current.Windows[0].Navigation, popup));
     }
 
     protected override async Task<Page> NavigateToScreenAsync(ScreenRouteDescriptor descriptor, CancellationToken cancellationToken)
@@ -46,13 +46,13 @@ internal class PageScreenHandler(IServiceProvider serviceProvider) : ScreenHandl
             throw new ScreenNavigationException("Unable to navigate to a page without a current application set.");
         }
 
-        if (Application.Current.MainPage is NavigationPage navigationPage)
+        if (Application.Current.Windows[0].Page is NavigationPage navigationPage)
         {
             await navigationPage.PushAsync(screen);
         }
         else
         {
-            Application.Current.MainPage = screen;
+            Application.Current.Windows[0].Page = screen;
         }
 
         return screen;
