@@ -1,6 +1,5 @@
-﻿namespace OSK.Maui.Screens.Exceptions
+﻿namespace OSK.Maui.Screens.Exceptions;
+
+public class ScreenPopupNavigationException(string message): ScreenNavigationException(message)
 {
-    public class ScreenPopupNavigationException(string message): ScreenNavigationException(message)
-    {
-    }
 }

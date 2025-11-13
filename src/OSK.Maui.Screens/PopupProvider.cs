@@ -2,37 +2,36 @@
 using OSK.Maui.Screens.Models;
 using OSK.Maui.Screens.Ports;
 
-namespace OSK.Maui.Screens
+namespace OSK.Maui.Screens;
+
+public abstract class PopupProvider<TPopup>(IServiceProvider serviceProvider) : IPopupProvider
 {
-    public abstract class PopupProvider<TPopup>(IServiceProvider serviceProvider) : IPopupProvider
+    #region Variables
+
+    protected IServiceProvider ServiceProvider => serviceProvider;
+
+    #endregion
+
+    #region IPopupHandlerProvider
+
+    public ValueTask<PopupHandler> GetPopupAsync(PopupNavigation popupNavigation, CancellationToken cancellationToken = default)
     {
-        #region Variables
+        ArgumentNullException.ThrowIfNull(popupNavigation?.PopupType);
 
-        protected IServiceProvider ServiceProvider => serviceProvider;
-
-        #endregion
-
-        #region IPopupHandlerProvider
-
-        public ValueTask<PopupHandler> GetPopupAsync(PopupNavigation popupNavigation, CancellationToken cancellationToken = default)
+        if (!popupNavigation.PopupType.IsAssignableTo(typeof(TPopup)))
         {
-            ArgumentNullException.ThrowIfNull(popupNavigation?.PopupType);
-
-            if (!popupNavigation.PopupType.IsAssignableTo(typeof(TPopup)))
-            {
-                throw new ScreenPopupNavigationException($"Popup Provider of type {GetType().FullName} can only create popups of type {typeof(TPopup).FullName}.");
-            }
-
-            return GetPopupHandlerAsync(popupNavigation, cancellationToken);
+            throw new ScreenPopupNavigationException($"Popup Provider of type {GetType().FullName} can only create popups of type {typeof(TPopup).FullName}.");
         }
 
-        #endregion
-
-        #region Helpers
-
-        protected abstract ValueTask<PopupHandler> GetPopupHandlerAsync(PopupNavigation popupNavigation, 
-            CancellationToken cancellationToken);
-
-        #endregion
+        return GetPopupHandlerAsync(popupNavigation, cancellationToken);
     }
+
+    #endregion
+
+    #region Helpers
+
+    protected abstract ValueTask<PopupHandler> GetPopupHandlerAsync(PopupNavigation popupNavigation, 
+        CancellationToken cancellationToken);
+
+    #endregion
 }

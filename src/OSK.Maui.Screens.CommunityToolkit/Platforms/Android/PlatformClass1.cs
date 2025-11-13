@@ -1,7 +1,6 @@
-﻿namespace OSK.Maui.Screens.CommunityToolkit.Platforms.Android
+﻿namespace OSK.Maui.Screens.CommunityToolkit.Platforms.Android;
+
+// All the code in this file is only included on Android.
+public class PlatformClass1
 {
-    // All the code in this file is only included on Android.
-    public class PlatformClass1
-    {
-    }
 }

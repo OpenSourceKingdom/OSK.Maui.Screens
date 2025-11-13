@@ -1,7 +1,6 @@
-﻿namespace OSK.Maui.Screens.Platforms.iOS
+﻿namespace OSK.Maui.Screens.Platforms.iOS;
+
+// All the code in this file is only included on iOS.
+public class PlatformClass1
 {
-    // All the code in this file is only included on iOS.
-    public class PlatformClass1
-    {
-    }
 }
