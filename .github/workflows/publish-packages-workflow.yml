@@ -44,16 +44,16 @@ jobs:
 
 # Builds
       - name: Build Screens Project
-      - run: dotnet build --configuration Release ${{ env.PathToScreensProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+        run: dotnet build --configuration Release ${{ env.PathToScreensProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
       - name: Build Blazor Project
-      - run: dotnet build --configuration Release ${{ env.PathToScreensBlazorProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+        run: dotnet build --configuration Release ${{ env.PathToScreensBlazorProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
       - name: Build Screens Community Project
-      - run: dotnet build --configuration Release ${{ env.PathToScreensCommunityProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+        run: dotnet build --configuration Release ${{ env.PathToScreensCommunityProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
       - name: Build Screens Mopups Project
-      - run: dotnet build --configuration Release ${{ env.PathToScreensMopupsProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+        run: dotnet build --configuration Release ${{ env.PathToScreensMopupsProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
 # Packages
       - name: Create the package
