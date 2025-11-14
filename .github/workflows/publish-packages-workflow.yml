@@ -30,6 +30,6 @@ jobs:
         run: dotnet workload install maui         
       - run: dotnet build --configuration Release ./src /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
       - name: Create the package
-        run: dotnet pack --configuration Release ./src -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+        run: dotnet pack --configuration Release ./src -o . /p:Version=1.0.0
  #     - name: Publish the package to Nuget
  #       run: dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_TOKEN }} -s https://api.nuget.org/v3/index.json --skip-duplicate
