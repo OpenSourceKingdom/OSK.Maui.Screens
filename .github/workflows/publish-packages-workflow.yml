@@ -1,7 +1,6 @@
 name: Publish packages
 
 on:
-  push:
   pull_request:
   workflow_dispatch:
   release:
@@ -10,7 +9,7 @@ on:
 env:
   PathToScreensProject: ./src/OSK.Maui.Screens/OSK.Maui.Screens.csproj
   PathToScreensBlazorProject: ./src/OSK.Maui.Screens.Blazor/OSK.Maui.Screens.Blazor.csproj
-  PathToScreensCommunityProject: ./src/OSK.Maui.Screens.Community/OSK.Maui.Screens.Community.csproj
+  PathToScreensCommunityProject: ./src/OSK.Maui.Screens.CommunityToolkit/OSK.Maui.Screens.CommunityToolkit.csproj
   PathToScreensMopupsProject: ./src/OSK.Maui.Screens.Mopups/OSK.Maui.Screens.Mopups.csproj
 
 permissions:
