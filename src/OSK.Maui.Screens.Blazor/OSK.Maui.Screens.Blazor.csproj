@@ -16,7 +16,8 @@
 		<PackageTags>OpenSourceKingdom, OpenSource, Maui, Screen, Popup, route, routing, navigation, nav, handler, provider, app, blazor, razor</PackageTags>
 		<Title>OSK.Maui.Screens.Blazor</Title>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<DisableStaticWebAssets>true</DisableStaticWebAssets>
+		
+		<StaticWebAssetsEnabled>false</StaticWebAssetsEnabled>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">15.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">15.0</SupportedOSPlatformVersion>
