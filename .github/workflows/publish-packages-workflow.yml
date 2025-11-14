@@ -59,8 +59,13 @@ jobs:
         run: dotnet pack --configuration Release ${{ env.PathToScreensProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
       - name: Pack Blazor Project
-        run: dotnet pack ${{ env.PathToScreensBlazorProject }} -c Release -f net10.0-android \
-            -o . --no-build /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+        run: dotnet pack ./src/OSK.Maui.Screens.Blazor/OSK.Maui.Screens.Blazor.csproj \
+            -c Release \
+            -f net10.0-android \
+            -o . \
+            --no-build \
+            /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+        shell: bash
 
       - name: Pack Screens Community Project
         run: dotnet pack --configuration Release ${{ env.PathToScreensCommunityProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
