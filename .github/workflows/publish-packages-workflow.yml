@@ -32,7 +32,7 @@ jobs:
           fi
           echo "PACKAGE_VERSION=$VERSION" >> "$GITHUB_OUTPUT"
         shell: bash
-      - uses: actions/setup-dotnet@v4.0.0
+      - uses: actions/setup-dotnet@v5.0.0
         with:
           dotnet-version: '10.0.x' # SDK Version to use.
         env:
@@ -59,11 +59,12 @@ jobs:
         run: dotnet pack --configuration Release ${{ env.PathToScreensProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
       - name: Pack Blazor Project
-        run: dotnet pack --configuration Release ${{ env.PathToScreensBlazorProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
+        run: |
+         ls -R src/OSK.Maui.Screens.Blazor/obj/Release/net10.0-android/
+         dotnet pack --configuration Release ${{ env.PathToScreensBlazorProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+        shell: bash
       - name: Pack Screens Community Project
         run: dotnet pack --configuration Release ${{ env.PathToScreensCommunityProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
       - name: Pack Screens Mopups Project
         run: dotnet pack --configuration Release ${{ env.PathToScreensMopupsProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
