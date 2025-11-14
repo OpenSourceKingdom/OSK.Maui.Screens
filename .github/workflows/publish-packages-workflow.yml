@@ -7,6 +7,12 @@ on:
   release:
     types: [created]
 
+env:
+  PathToScreensProject: ./src/OSK.Maui.Screens/OSKMaui.Screens.csproj
+  PathToScreensBlazorProject: ./src/OSK.Maui.Screens.Blazor/OSKMaui.Screens.Blazor.csproj
+  PathToScreensCommunityProject: ./src/OSK.Maui.Screens.Community/OSKMaui.Screens.Community.csproj
+  PathToScreensMopupsProject: ./src/OSK.Maui.Screens.Mopups/OSKMaui.Screens.Mopups.csproj
+
 permissions:
   packages: write
   contents: read
@@ -34,8 +40,22 @@ jobs:
           NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
           
       - name: Install MAUI workload
-        run: dotnet workload install maui         
-      - run: dotnet build --configuration Release ./src /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+        run: dotnet workload install maui  
+
+# Builds
+      - name: Build Screens Project
+      - run: dotnet build --configuration Release ${{ env.PathToScreensProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+
+      - name: Build Blazor Project
+      - run: dotnet build --configuration Release ${{ env.PathToScreensBlazorProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+
+      - name: Build Screens Community Project
+      - run: dotnet build --configuration Release ${{ env.PathToScreensCommunityProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+
+      - name: Build Screens Mopups Project
+      - run: dotnet build --configuration Release ${{ env.PathToScreensMopupsProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+
+# Packages
       - name: Create the package
         run: dotnet pack --configuration Release ./src -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
  #     - name: Publish the package to Nuget
