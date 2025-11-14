@@ -8,10 +8,10 @@ on:
     types: [created]
 
 env:
-  PathToScreensProject: ./src/OSK.Maui.Screens/OSKMaui.Screens.csproj
-  PathToScreensBlazorProject: ./src/OSK.Maui.Screens.Blazor/OSKMaui.Screens.Blazor.csproj
-  PathToScreensCommunityProject: ./src/OSK.Maui.Screens.Community/OSKMaui.Screens.Community.csproj
-  PathToScreensMopupsProject: ./src/OSK.Maui.Screens.Mopups/OSKMaui.Screens.Mopups.csproj
+  PathToScreensProject: ./src/OSK.Maui.Screens/OSK.Maui.Screens.csproj
+  PathToScreensBlazorProject: ./src/OSK.Maui.Screens.Blazor/OSK.Maui.Screens.Blazor.csproj
+  PathToScreensCommunityProject: ./src/OSK.Maui.Screens.Community/OSK.Maui.Screens.Community.csproj
+  PathToScreensMopupsProject: ./src/OSK.Maui.Screens.Mopups/OSK.Maui.Screens.Mopups.csproj
 
 permissions:
   packages: write
