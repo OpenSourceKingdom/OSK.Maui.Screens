@@ -9,6 +9,8 @@
 		<SingleProject>true</SingleProject>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
+		<!-- Ensure static web assets are enabled so the SDK generates the StaticWebAsset endpoints props -->
+		<EnableStaticWebAssets>true</EnableStaticWebAssets>
 
 		<Description>
 			Provides a means of integrating blazor related popups and navigation with the screens library
