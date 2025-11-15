@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Extensions;
-using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Views;
 using OSK.Maui.Screens.Ports;
 
 namespace OSK.Maui.Screens.CommunityToolkit.Internal;
