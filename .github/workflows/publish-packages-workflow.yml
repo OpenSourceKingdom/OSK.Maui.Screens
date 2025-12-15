@@ -50,7 +50,7 @@ jobs:
         run: dotnet build ${{ env.PathToScreensBlazorProject }} -c Release /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
       - name: Build Blazor PopupPage Project
-        run: dotnet build ${{ env.PathToBlazorPopupProject }} -c Release /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }} /p:_ContentManifestDependsOn=" "
+        run: dotnet build ${{ env.PathToBlazorPopupProject }} -c Release /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
       - name: Build Screens Community Project
         run: dotnet build --configuration Release ${{ env.PathToScreensCommunityProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
