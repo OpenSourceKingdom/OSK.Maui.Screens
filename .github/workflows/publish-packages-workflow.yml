@@ -2,15 +2,8 @@ name: Publish packages
 
 on:
   pull_request:
-  workflow_dispatch:
   release:
     types: [created]
-
-env:
-  PathToScreensProject: ./src/OSK.Maui.Screens/OSK.Maui.Screens.csproj
-  PathToScreensBlazorProject: ./src/OSK.Maui.Screens.Blazor/OSK.Maui.Screens.Blazor.csproj
-  PathToScreensCommunityProject: ./src/OSK.Maui.Screens.CommunityToolkit/OSK.Maui.Screens.CommunityToolkit.csproj
-  PathToScreensMopupsProject: ./src/OSK.Maui.Screens.Mopups/OSK.Maui.Screens.Mopups.csproj
 
 permissions:
   packages: write
@@ -39,32 +32,9 @@ jobs:
           NUGET_AUTH_TOKEN: ${{ secrets.NUGET_TOKEN }}
           
       - name: Install MAUI workload
-        run: dotnet workload install maui  
-
-# Builds
-      - name: Build Screens Project
-        run: dotnet build --configuration Release ${{ env.PathToScreensProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
-      - name: Build Blazor Project
-        run: dotnet build ${{ env.PathToScreensBlazorProject }} -c Release /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
-      - name: Build Screens Community Project
-        run: dotnet build --configuration Release ${{ env.PathToScreensCommunityProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
-      - name: Build Screens Mopups Project
-        run: dotnet build --configuration Release ${{ env.PathToScreensMopupsProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
-# Packages
-      - name: Pack Screens Project
-        run: dotnet pack --configuration Release ${{ env.PathToScreensProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
-      - name: Pack Blazor Project
-        run: dotnet pack --configuration Release ${{ env.PathToScreensBlazorProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
-      - name: Pack Screens Community Project
-        run: dotnet pack --configuration Release ${{ env.PathToScreensCommunityProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-      - name: Pack Screens Mopups Project
-        run: dotnet pack --configuration Release ${{ env.PathToScreensMopupsProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
+        run: dotnet workload install maui         
+      - run: dotnet build --configuration Release ./src /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
+      - name: Create the package
+        run: dotnet pack --configuration Release ./src -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
  #     - name: Publish the package to Nuget
  #       run: dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_TOKEN }} -s https://api.nuget.org/v3/index.json --skip-duplicate
