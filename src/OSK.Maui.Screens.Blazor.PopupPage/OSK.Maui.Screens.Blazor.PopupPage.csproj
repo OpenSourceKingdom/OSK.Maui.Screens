@@ -14,6 +14,14 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		
+		<Description>
+			Provides a basic MAUI blazor popup component that uses BlazorWebView and works with the Blazor screens project
+		</Description>
+		<PackageTags>OpenSourceKingdom, OpenSource, Maui, Screen, Popup, route, routing, navigation, nav, handler, provider, app, blazor, razor</PackageTags>
+		<Title>OSK.Maui.Screens.Blazor.PopupPage</Title>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	
 	</PropertyGroup>
 	
 	<PropertyGroup>

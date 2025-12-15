@@ -58,10 +58,6 @@ jobs:
       - name: Pack Screens Project
         run: dotnet pack --configuration Release ${{ env.PathToScreensProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
-      - name: list webasset directory for blazor
-        run: ls -R src/OSK.Maui.Screens.Blazor/obj/Release/net10.0-android/staticwebassets
-        shell: bash
-
       - name: Pack Blazor Project
         run: dotnet pack --configuration Release ${{ env.PathToScreensBlazorProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
