@@ -50,8 +50,8 @@ jobs:
         run: dotnet build ${{ env.PathToScreensBlazorProject }} -c Release /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
       - name: Build Blazor PopupPage Project
-        run: dotnet build ${{ env.PathToBlazorPopupProject }} -c Release /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-
+        run: dotnet build ${{ env.PathToBlazorPopupProject }} -c Release /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }} -f net10.0-android
+      
       - name: Build Screens Community Project
         run: dotnet build --configuration Release ${{ env.PathToScreensCommunityProject }} /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
@@ -66,7 +66,7 @@ jobs:
         run: dotnet pack --configuration Release ${{ env.PathToScreensBlazorProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
       - name: Pack Blazor PopupPage Project
-        run: dotnet pack --configuration Release ${{ env.PathToBlazorPopupProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }} /p:_ContentManifestDependsOn=" " /p:NoBuild=true /p:_EnableStaticWebAssetGeneration=false
+        run: dotnet pack --configuration Release ${{ env.PathToBlazorPopupProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }} /p:_ContentManifestDependsOn=" " /p:NoBuild=true /p:_EnableStaticWebAssetGeneration=false -f net10.0-android     
       
       - name: Pack Screens Community Project
         run: dotnet pack --configuration Release ${{ env.PathToScreensCommunityProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
