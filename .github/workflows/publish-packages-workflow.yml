@@ -66,14 +66,7 @@ jobs:
         run: dotnet pack --configuration Release ${{ env.PathToScreensBlazorProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
       - name: Pack Blazor PopupPage Project
-        run: >
-          dotnet pack ${{ env.PathToBlazorPopupProject }}
-                -c Release
-                -o .
-                /p:TargetFrameworks=net10.0-android
-                /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
-                /p:_ContentManifestDependsOn=" "
-                /p:_EnableStaticWebAssetGeneration=false
+        run: dotnet pack ${{ env.PathToBlazorPopupProject }} -c Release -o . /p:TargetFrameworks=net10.0-android /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }} /p:_ContentManifestDependsOn=" " /p:_EnableStaticWebAssetGeneration=false
      
       - name: Pack Screens Community Project
         run: dotnet pack --configuration Release ${{ env.PathToScreensCommunityProject }} -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
