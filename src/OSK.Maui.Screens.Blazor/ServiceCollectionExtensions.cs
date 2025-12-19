@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using OSK.Maui.Screens.Blazor.Internal.Services;
+using OSK.Maui.Screens.Blazor.PopupPage.Internal.Services;
 using OSK.Maui.Screens.Blazor.Ports;
 using OSK.Maui.Screens.Ports;
 
@@ -20,9 +21,10 @@ public static class ServiceCollectionExtensions
         // Blazor Screen Handler
         services.TryAddSingleton<IBlazorComponentProvider, BlazorComponentProvider>();
 
+        services.TryAddTransient<IBlazorPopupPageFactory, BlazorPopupComponentPageFactory>();
+
         services.AddBlazorPopup<BlazorPopupComponent>();
         services.TryAddTransient<BlazorScreenHandler>();
-        services.TryAddTransient<BlazorPopupComponentPage>();
 
         return services;
     }
