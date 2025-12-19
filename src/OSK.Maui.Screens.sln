@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11205.157 d18.0
+VisualStudioVersion = 18.0.11205.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSK.Maui.Screens", "OSK.Maui.Screens\OSK.Maui.Screens.csproj", "{5F552C0A-7CDB-42EE-AB31-75664D43BC2B}"
 EndProject
@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSK.Maui.Screens.CommunityT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSK.Maui.Screens.UnitTests", "OSK.Maui.Screens.UnitTests\OSK.Maui.Screens.UnitTests.csproj", "{290C484C-6D44-4CAE-BC7E-F736A4C03D1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSK.Maui.Screens.Blazor.PopupPage", "OSK.Maui.Screens.Blazor.PopupPage\OSK.Maui.Screens.Blazor.PopupPage.csproj", "{67D31433-1B8E-4AAD-B19B-03DDCD7C8500}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OSK.Maui.Screens.Blazor.PopupPage", "OSK.Maui.Screens.Blazor.PopupPage\OSK.Maui.Screens.Blazor.PopupPage.csproj", "{CD91960F-EBD9-4F68-8DEA-36BDDBE7A3A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,12 +41,15 @@ Global
 		{290C484C-6D44-4CAE-BC7E-F736A4C03D1B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{290C484C-6D44-4CAE-BC7E-F736A4C03D1B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{290C484C-6D44-4CAE-BC7E-F736A4C03D1B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{67D31433-1B8E-4AAD-B19B-03DDCD7C8500}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{67D31433-1B8E-4AAD-B19B-03DDCD7C8500}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{67D31433-1B8E-4AAD-B19B-03DDCD7C8500}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{67D31433-1B8E-4AAD-B19B-03DDCD7C8500}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD91960F-EBD9-4F68-8DEA-36BDDBE7A3A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD91960F-EBD9-4F68-8DEA-36BDDBE7A3A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD91960F-EBD9-4F68-8DEA-36BDDBE7A3A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD91960F-EBD9-4F68-8DEA-36BDDBE7A3A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A243BDB3-694F-4941-9533-BBB5C974A1A6}
 	EndGlobalSection
 EndGlobal
