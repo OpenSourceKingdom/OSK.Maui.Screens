@@ -1,7 +1,7 @@
 name: Publish packages
 
 on:
-  pull_request:
+#  pull_request:
   release:
     types: [created]
 
@@ -39,6 +39,5 @@ jobs:
       - name: Create the packages
         run: dotnet pack --configuration Release ./src -o . /p:Version=${{ steps.get_version.outputs.PACKAGE_VERSION }}
 
- # Publish
- #     - name: Publish the package to Nuget
- #       run: dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_TOKEN }} -s https://api.nuget.org/v3/index.json --skip-duplicate
+      - name: Publish the package to Nuget
+        run: dotnet nuget push **/*.nupkg -k ${{ secrets.NUGET_TOKEN }} -s https://api.nuget.org/v3/index.json --skip-duplicate
