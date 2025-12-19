@@ -9,9 +9,17 @@
 		<Nullable>enable</Nullable>
 		<IsPackable>true</IsPackable>
 
+		<Description>
+			Provides a default popup page implementation for blazor related popups and navigation with the screens library
+		</Description>
+		<PackageTags>OpenSourceKingdom, OpenSource, Maui, Screen, Popup, Page, route, routing, navigation, nav, handler, provider, app, blazor, razor</PackageTags>
+		<Title>OSK.Maui.Screens.Blazor.PopupPage</Title>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+
 	</PropertyGroup>
 
 	<ItemGroup>
+		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 	</ItemGroup>
